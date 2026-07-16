@@ -380,7 +380,7 @@ html:not(.js) .intro-env-layer {
   position: absolute;
   inset: 0;
   border-radius: 0 0 14px 14px;
-  background: url("../images/paper-texture-cream.jpg") center / 130% auto;
+  background: url("../images/paper-texture-cream.webp") center / 130% auto;
   mix-blend-mode: multiply;
   opacity: 0.3;
   pointer-events: none;
@@ -418,7 +418,7 @@ html:not(.js) .intro-env-layer {
    them (.wc-live) so pigment dissolves into the page with torn edges
    instead of ending at the section box */
 .interlude--cream {
-  background: var(--cream) url("../images/wash-interlude-cream.jpg") center / cover no-repeat;
+  background: var(--cream) url("../images/wash-interlude-cream.webp") center / cover no-repeat;
 }
 
 .interlude--cream::after {
@@ -430,7 +430,7 @@ html:not(.js) .intro-env-layer {
 
 /* very light plum: a pale mauve veil, ink text on top */
 .interlude--plum {
-  background: var(--plum-soft) url("../images/wash-interlude-plum.jpg") center / cover no-repeat;
+  background: var(--plum-soft) url("../images/wash-interlude-plum.webp") center / cover no-repeat;
 }
 
 .interlude--plum::after {
@@ -750,7 +750,7 @@ html:not(.js) .intro-env-layer {
    dark shader; this background is the fallback when WebGL is missing */
 .closing-wash {
   position: relative;
-  background: var(--plum-soft) url("../images/wash-interlude-plum.jpg") center / cover no-repeat;
+  background: var(--plum-soft) url("../images/wash-interlude-plum.webp") center / cover no-repeat;
 }
 
 .closing-wash::after {
@@ -884,7 +884,7 @@ html:not(.js) .intro-env-layer {
   position: absolute;
   inset: 0;
   border-radius: 0 0 14px 14px;
-  background: url("../images/paper-texture-cream.jpg") center / 130% auto;
+  background: url("../images/paper-texture-cream.webp") center / 130% auto;
   mix-blend-mode: multiply;
   opacity: 0.3;
   pointer-events: none;
