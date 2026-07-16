@@ -132,7 +132,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
         { clipPath: "inset(0 0 -8% 0)", y: 0, duration: 1 }, 0.18)
       .fromTo(act.querySelector(".act-rule"),
         { scaleX: 0 }, { scaleX: 1, duration: 0.7 }, 0.42)
-      .fromTo([act.querySelector(".act-date"), act.querySelector(".act-venue"), act.querySelector(".act-place")],
+      .fromTo([act.querySelector(".act-date"), act.querySelector(".act-venue"), act.querySelector(".act-place"), act.querySelector(".act-map")],
         { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.09 }, 0.5);
   });
 
@@ -210,24 +210,30 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }
   });
 
-  /* ── 5. Blossoms — still sprays that dissolve with their section.
-        No movement at all: pigment gathers (blur clears) as the
-        section arrives, and diffuses away as it leaves. ── */
+  /* ── 5. Blossoms — sprays that dissolve with their section:
+        pigment gathers (blur clears) as the section arrives, and
+        diffuses away as it leaves. A gentle parallax drift (a few px
+        against the scroll, per-element via data-drift) sits on top;
+        GSAP folds each spray's CSS flip/rotation into its own
+        transform, so those survive the drift. ── */
 
   document.querySelectorAll(".blossom").forEach((b) => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: b.closest("section"),
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 0.8
-      },
-      defaults: { ease: "none" }
-    });
+    const trigger = {
+      trigger: b.closest("section"),
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 0.8
+    };
+    const tl = gsap.timeline({ scrollTrigger: trigger, defaults: { ease: "none" } });
     tl.fromTo(b,
         { autoAlpha: 0, filter: "blur(14px)" },
         { autoAlpha: 1, filter: "blur(0px)", duration: 0.3, ease: "power1.out" }, 0.06)
       .to(b, { autoAlpha: 0, filter: "blur(14px)", duration: 0.26, ease: "power1.in" }, 0.72);
+
+    const drift = parseFloat(b.dataset.drift) || 0;
+    if (drift) {
+      gsap.fromTo(b, { y: drift }, { y: -drift, ease: "none", scrollTrigger: { ...trigger } });
+    }
   });
 
   /* ── 6. Closing — the card folds back into the envelope ──── */

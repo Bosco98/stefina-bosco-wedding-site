@@ -129,7 +129,7 @@
     <!-- ═══════════ INTERLUDE I — Job 23:14 ═══════════ -->
     <section class="interlude interlude--cream" id="interlude1">
       <canvas class="wc" data-wc="light" data-seed="2.0" aria-hidden="true"></canvas>
-      <img class="blossom blossom--i1" src="images/blossom-diagonal.webp" alt="" aria-hidden="true">
+      <img class="blossom blossom--i1" src="images/blossom-diagonal.webp" data-drift="90" alt="" aria-hidden="true">
       <div class="interlude-inner">
         <p class="verse-mark" aria-hidden="true">✝</p>
         <blockquote class="verse">
@@ -143,8 +143,8 @@
     <!-- ═══════════ EVENT DETAILS — full-bleed over living watercolor (WebGL) ═══════════ -->
     <section class="details" id="details">
       <canvas class="wc" data-wc="light" data-seed="1.0" aria-hidden="true"></canvas>
-      <img class="blossom blossom--details-tr" src="images/blossom-corner-2.webp" alt="" aria-hidden="true">
-      <img class="blossom blossom--details-bl" src="images/blossom-edge.webp" alt="" aria-hidden="true" style="transform: rotate(56deg);">
+      <img class="blossom blossom--details-tr" src="images/blossom-corner-2.webp" data-drift="170" alt="" aria-hidden="true">
+      <img class="blossom blossom--details-bl" src="images/blossom-edge.webp" data-drift="120" alt="" aria-hidden="true" style="transform: rotate(56deg);">
       <div class="details-inner">
 
         <p class="details-open" data-words>With hearts full of joy, and with the blessings of</p>
@@ -159,13 +159,20 @@
 
         <div class="acts">
           <article class="act">
-            <img class="act-sprig" src="images/sprig-cross-candle.webp" alt="" aria-hidden="true">
+            <!-- trying the glyph below instead — original artwork kept for easy revert:
+            <img class="act-sprig act-sprig--cross" src="images/sprig-cross-candle.webp" alt="" aria-hidden="true">
+            -->
+            <span class="act-sprig act-sprig--glyph" aria-hidden="true">&#x271D;&#xFE0E;</span>
             <p class="act-label">The Ceremony</p>
             <p class="act-time"><span class="act-time-big">3:30</span><span class="act-time-mer">in the afternoon</span></p>
             <hr class="act-rule">
             <p class="act-date">Wednesday · January 6th, 2027</p>
             <p class="act-venue">St.&nbsp;Francis of Assisi<br>Roman Catholic Metropolitan Cathedral</p>
             <p class="act-place">Ernakulam</p>
+            <a class="act-map" href="https://www.google.com/maps/search/?api=1&amp;query=St+Francis+Assisi+Roman+Catholic+Metropolitan+Cathedral+Ernakulam" target="_blank" rel="noopener">
+              <svg class="act-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+              <span>View on Map</span>
+            </a>
           </article>
 
           <div class="acts-divider" aria-hidden="true"></div>
@@ -178,6 +185,10 @@
             <p class="act-date">Dinner &amp; dancing to follow</p>
             <p class="act-venue">Alpha Horizon<br>Vallarpadam</p>
             <p class="act-place">Kochi, Ernakulam</p>
+            <a class="act-map" href="https://www.google.com/maps/search/?api=1&amp;query=Alpha+Horizon+Vallarpadam+Kochi" target="_blank" rel="noopener">
+              <svg class="act-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+              <span>View on Map</span>
+            </a>
           </article>
         </div>
 
@@ -199,7 +210,7 @@
 
     <!-- ═══════════ GALLERY ═══════════ -->
     <section class="gallery" id="gallery">
-      <img class="blossom blossom--gallery-tl" src="images/blossom-corner.webp" alt="" aria-hidden="true">
+      <img class="blossom blossom--gallery-tl" src="images/blossom-corner.webp" data-drift="130" alt="" aria-hidden="true">
       <h2 class="gallery-title">Together is our favorite place to be.</h2>
       <div class="gallery-frames">
         <figure class="frame frame--left">
