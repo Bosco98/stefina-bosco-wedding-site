@@ -4,7 +4,13 @@
    flap lifts → the painting blooms out of the envelope.
    ══════════════════════════════════════════════════════════════ */
 
-document.documentElement.classList.add("js");
+/* the .js class is added inline in <head> so the envelope room is
+   there at first paint; if the GSAP CDN never arrived, fall back to
+   the static no-JS presentation instead of a dead sealed envelope */
+if (!window.gsap || !window.ScrollTrigger) {
+  document.documentElement.classList.remove("js");
+  throw new Error("GSAP failed to load — using static fallback");
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +36,10 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
   intro
     // the hint retires as soon as the guest commits
     .to("#envHint", { autoAlpha: 0, y: -12, duration: 0.05 }, 0)
+    // unlike the hint, the arrow stays for the whole pinned sequence —
+    // the page isn't visually moving yet, so it keeps asking for scroll
+    // until just before the pin releases
+    .to("#envArrow", { autoAlpha: 0, duration: 0.08 }, 0.88)
 
     // the wax snaps: a brief press, then the seal cracks in two and
     // the halves tumble away from the break line

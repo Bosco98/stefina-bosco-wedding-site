@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- before first paint, or the unmasked hero flashes ahead of the
+       envelope; main.js removes the class again if GSAP fails to load -->
+  <script>document.documentElement.classList.add("js");</script>
+
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RG49W72QXF"></script>
   <script>
@@ -124,6 +128,9 @@
         </div>
         <p class="env-hint" id="envHint">Scroll to open your invitation</p>
       </div>
+
+      <!-- stays through the whole pinned sequence, above both layers -->
+      <svg class="intro-arrow" id="envArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     </section>
 
     <!-- ═══════════ INTERLUDE I — Job 23:14 ═══════════ -->
@@ -131,7 +138,7 @@
       <canvas class="wc" data-wc="light" data-seed="2.0" aria-hidden="true"></canvas>
       <img class="blossom blossom--i1" src="images/blossom-diagonal.webp" data-drift="90" alt="" aria-hidden="true">
       <div class="interlude-inner">
-        <p class="verse-mark" aria-hidden="true">✝</p>
+        <p class="verse-mark" aria-hidden="true"><svg viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2.5v27M4.5 10.5h15"/></svg></p>
         <blockquote class="verse">
           <p>“He will fulfil what<br>He has planned for me.”</p>
           <cite>Job 23 : 14</cite>
@@ -162,7 +169,7 @@
             <!-- trying the glyph below instead — original artwork kept for easy revert:
             <img class="act-sprig act-sprig--cross" src="images/sprig-cross-candle.webp" alt="" aria-hidden="true">
             -->
-            <span class="act-sprig act-sprig--glyph" aria-hidden="true">&#x271D;&#xFE0E;</span>
+            <svg class="act-sprig act-sprig--glyph" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 2.5v27M4.5 10.5h15"/></svg>
             <p class="act-label">The Ceremony</p>
             <p class="act-time"><span class="act-time-big">3:30</span><span class="act-time-mer">in the afternoon</span></p>
             <hr class="act-rule">

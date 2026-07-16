@@ -13,6 +13,8 @@
   --paper: #f7edda;
   --paper-shade: #e9d9bd;
   --ink: #2a1420;
+  /* supporting text: ink lifted toward plum — quiet, still readable */
+  --text-muted: #5f4a57;
   --plum-soft: #efe1ea;
 
   --font-display: "Fraunces", Georgia, serif;
@@ -33,7 +35,8 @@ body {
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.6;
-  color: var(--ink);
+  /* base text runs muted; headings/display type re-assert --ink */
+  color: var(--text-muted);
   background: var(--cream);
   overflow-x: hidden;
 }
@@ -147,7 +150,7 @@ html:not(.js) .intro-hero {
   font-family: var(--font-display);
   font-style: italic;
   font-size: clamp(1rem, 2.4vw, 1.2rem);
-  color: var(--ink);
+  color: var(--text-muted);
   text-shadow: 0 0 18px var(--cream), 0 0 6px var(--cream);
 }
 
@@ -180,7 +183,7 @@ html:not(.js) .intro-hero {
   font-size: clamp(0.82rem, 1.9vw, 0.95rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--text-muted);
   text-shadow: 0 0 14px var(--cream), 0 0 5px var(--cream);
 }
 
@@ -395,6 +398,35 @@ html:not(.js) .intro-env-layer {
   color: var(--gold-deep);
 }
 
+/* tiny chevron pinned to the intro's foot — sits above both layers
+   and survives the envelope's mask-out, so it keeps inviting scroll
+   for the whole pinned sequence. The bob animates transform only,
+   so GSAP's opacity fade at the sequence's end passes through. */
+.intro-arrow {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.25rem, 4vh, 2.25rem);
+  /* separate property: composes with the keyframes' transform */
+  translate: -50%;
+  width: 1.85rem;
+  height: 1.85rem;
+  color: var(--ink);
+  opacity: 0.65;
+  animation: intro-arrow-bob 2.4s ease-in-out infinite;
+}
+
+@keyframes intro-arrow-bob {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+}
+
 /* ── Scripture interludes ─────────────────────────────────── */
 
 /* shared canvas for all watercolor shaders */
@@ -457,10 +489,16 @@ html:not(.js) .intro-env-layer {
   text-align: center;
 }
 
+/* inline SVG cross — the ✝ character renders as Android's purple
+   emoji, so type is off the table here */
 .verse-mark {
   margin: 0 0 1.5rem;
-  font-size: 1.5rem;
   color: var(--gold-deep);
+}
+
+.verse-mark svg {
+  width: 1.35rem;
+  height: 1.8rem;
 }
 
 .verse {
@@ -492,7 +530,7 @@ html:not(.js) .intro-env-layer {
   margin: 2.25rem 0 0;
   font-size: 1rem;
   letter-spacing: 0.04em;
-  color: var(--ink);
+  color: var(--text-muted);
 }
 
 /* ── Event details — full-bleed over living watercolor ────── */
@@ -519,7 +557,7 @@ html:not(.js) .intro-env-layer {
   font-family: var(--font-display);
   font-style: italic;
   font-size: clamp(1.1rem, 2.6vw, 1.45rem);
-  color: var(--ink);
+  color: var(--text-muted);
 }
 
 .details-parents {
@@ -531,7 +569,7 @@ html:not(.js) .intro-env-layer {
   gap: 0.4em 0.75em;
   font-size: clamp(0.95rem, 2.2vw, 1.1rem);
   letter-spacing: 0.04em;
-  color: var(--ink);
+  color: var(--text-muted);
 }
 
 .details-parents-sep {
@@ -561,7 +599,7 @@ html:not(.js) .intro-env-layer {
   font-family: var(--font-display);
   font-style: italic;
   font-size: clamp(1.1rem, 2.6vw, 1.5rem);
-  color: var(--ink);
+  color: var(--text-muted);
 }
 
 .acts {
@@ -598,15 +636,14 @@ html:not(.js) .intro-env-layer {
   margin-bottom: 1rem;
 }
 
-/* trial: typographic Latin cross in place of the artwork */
+/* trial: drawn Latin cross in place of the artwork — an SVG, not the
+   ✝ character, which Android renders as its purple emoji */
 .act-sprig--glyph {
   display: block;
-  width: auto;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(3.75rem, 8vw, 5.25rem);
-  line-height: 1;
-  text-align: center;
+  width: clamp(2.6rem, 5.5vw, 3.6rem);
+  height: clamp(3.5rem, 7.4vw, 4.8rem);
+  margin-left: auto;
+  margin-right: auto;
   color: var(--gold-deep);
 }
 
@@ -654,7 +691,7 @@ html:not(.js) .intro-env-layer {
   margin: 0 0 1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--ink);
+  color: var(--text-muted);
 }
 
 .act-venue {
@@ -935,7 +972,6 @@ html:not(.js) .intro-env-layer {
   top: 40%;
   translate: -50% -50%;
   width: 24%;
-  border-radius: 50%;
   mix-blend-mode: multiply;
   filter: brightness(1.06) contrast(1.04);
   opacity: 0;
