@@ -41,11 +41,10 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     // until just before the pin releases
     .to("#envArrow", { autoAlpha: 0, duration: 0.08 }, 0.88)
 
-    // the wax releases whole: a brief press, then the seal lifts off
-    // the paper intact and dissolves — never broken (a cracked seal
-    // reads as a bad omen)
-    .to("#envSealWrap", { scale: 1.05, duration: 0.025, ease: "power1.out" }, 0.03)
-    .to("#envSealWrap", { y: -34, scale: 1.16, autoAlpha: 0, duration: 0.085, ease: "power1.in" }, 0.06)
+    // the wax dissolves whole — the exact reverse of the closing stamp
+    // (opacity in / scale 1.7 -> 1), so open and close rhyme; never
+    // broken, a cracked seal reads as a bad omen
+    .to("#envSealWrap", { autoAlpha: 0, scale: 1.7, duration: 0.09, ease: "power3.out" }, 0.04)
 
     // the flap lifts past the guest; its inner face darkens as it turns
     .to("#envFlap", { rotateX: -168, duration: 0.16, ease: "power1.inOut" }, 0.13)
