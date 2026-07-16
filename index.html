@@ -50,7 +50,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Playfair+Display:ital,wght@1,400;1,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css">
+  <!-- bump ?v= together with the one on main.js whenever either file
+       changes — stale cached JS against fresh HTML breaks the intro -->
+  <link rel="stylesheet" href="css/style.css?v=2">
 
   <!-- Structured data: the wedding as a schema.org Event -->
   <script type="application/ld+json">
@@ -261,6 +263,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=2"></script>
 </body>
 </html>
