@@ -1,0 +1,983 @@
+/* ══════════════════════════════════════════════════════════════
+   Bosco & Stefina — The Illuminated Invitation
+   Palette: rani pink · antique gold · warm cream · soft plum
+   ══════════════════════════════════════════════════════════════ */
+
+:root {
+  --pink: #d5006d;
+  --pink-deep: #a80056;
+  --gold: #fcd488;
+  --gold-deep: #96793f;
+  --cream: #faf3e8;
+  --cream-deep: #f0e4d0;
+  --paper: #f7edda;
+  --paper-shade: #e9d9bd;
+  --ink: #2a1420;
+  --plum-soft: #efe1ea;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  /* only for ampersands: Playfair Display's italic & is an ornate
+     classic; Fraunces' own italic & renders as a curly ε shape */
+  --font-amp: "Playfair Display", "Fraunces", Georgia, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--cream);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* ══════════════════════════════════════════════════════════
+   INTRO — pinned sequence. Two stacked layers:
+   the hero beneath, the envelope room above.
+   ══════════════════════════════════════════════════════════ */
+
+.intro {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ── Layer 1: the hero, revealed through a watercolor bloom ── */
+
+.intro-hero {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 55% at 50% 0%, #e8eef2 0%, rgba(232, 238, 242, 0) 60%),
+    linear-gradient(#f6f1e6, var(--cream));
+  /* --bloom is driven by GSAP: 0% = hidden, 170% = fully revealed */
+  --bloom: 0%;
+  -webkit-mask-image: radial-gradient(circle at 50% 46%, #000 calc(var(--bloom) * 0.68), rgba(0, 0, 0, 0) var(--bloom));
+  mask-image: radial-gradient(circle at 50% 46%, #000 calc(var(--bloom) * 0.68), rgba(0, 0, 0, 0) var(--bloom));
+}
+
+html:not(.js) .intro-hero {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.hero-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  /* bottom-anchored: the painting's foot (door, couple) must sit above
+     the torn fog strip on wide/short screens, not centered into it */
+  place-items: end center;
+  overflow: hidden;
+}
+
+/* no overlay fog: the torn dissolve is baked into the painting's own
+   alpha channel (church-water-color-faded.png), so it tracks the image
+   exactly at every viewport size — the couple's zone is protected in
+   the bake itself */
+.hero-church {
+  /* absolute top/bottom anchoring: the painting's height equals the section
+     on every browser — no percentage-in-grid resolution to go wrong, and
+     the baked bottom edge is always exactly at the section's foot */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  translate: -50%;
+  /* separate property: composes with GSAP's transform */
+  height: 100%;
+  /* vs the absolute containing block — reliable everywhere,
+                   unlike percentage heights of grid items */
+  width: auto;
+  max-width: none;
+  /* feather the painting's sides into the cream so it sits in the page, not on it */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+
+  /* same sizing as desktop (full painting height, baked edge visible) —
+     only the side feather goes, since the painting overflows the width
+     of narrow screens anyway. object-fit:cover is banned here: on any
+     landscape-shaped box it center-crops the couple's feet clean off. */
+  .hero-church {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.hero-titles {
+  position: absolute;
+  top: clamp(2rem, 5.5vh, 4rem);
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.hero-intro {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  color: var(--ink);
+  text-shadow: 0 0 18px var(--cream), 0 0 6px var(--cream);
+}
+
+.hero-names {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 9vw, 5.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.32em;
+  flex-wrap: wrap;
+  text-shadow: 0 0 28px var(--cream), 0 0 10px var(--cream);
+}
+
+.hero-amp {
+  font-family: var(--font-amp);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.65em;
+  color: var(--pink);
+}
+
+.hero-date {
+  margin: 1.1rem 0 0;
+  font-size: clamp(0.82rem, 1.9vw, 0.95rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-shadow: 0 0 14px var(--cream), 0 0 5px var(--cream);
+}
+
+/* ── Layer 2: the envelope room ───────────────────────────── */
+
+.intro-env-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  background:
+    radial-gradient(110% 80% at 50% 30%, rgba(213, 0, 109, 0.05), transparent 55%),
+    radial-gradient(140% 110% at 50% 45%, var(--cream) 0%, var(--cream-deep) 58%, #dfc9a8 100%);
+  /* --hole grows in sync with the hero's --bloom: the same circle that
+     reveals the painting eats the envelope room away — a morph, not a fade */
+  --hole: 0%;
+  -webkit-mask-image: radial-gradient(circle at 50% 46%, transparent calc(var(--hole) * 0.6), #000 var(--hole));
+  mask-image: radial-gradient(circle at 50% 46%, transparent calc(var(--hole) * 0.6), #000 var(--hole));
+}
+
+html:not(.js) .intro-env-layer {
+  display: none;
+}
+
+.envelope {
+  position: relative;
+  width: min(33rem, 88vw);
+  aspect-ratio: 8 / 5.4;
+  perspective: 1400px;
+}
+
+/* soft grounding shadow */
+.env-shadow {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: -5%;
+  height: 12%;
+  background: radial-gradient(50% 100% at 50% 50%, rgba(42, 20, 32, 0.28), transparent 70%);
+  filter: blur(6px);
+}
+
+/* back wall (the inside of the envelope, visible once open) */
+.env-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #e3d3b6 0%, #eddcbf 100%);
+  /* top corners square — the opening sits there; only the foot is rounded */
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 14px 30px -18px rgba(42, 20, 32, 0.45);
+}
+
+.env-interior {
+  position: absolute;
+  inset: 0 0 46% 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(42, 20, 32, 0.22), rgba(42, 20, 32, 0.04) 70%, transparent);
+}
+
+/* the card waiting inside */
+.env-card {
+  position: absolute;
+  /* narrower than the envelope throat so its corners never poke past the
+     open flap edges, and content at the top so it emerges readable */
+  left: 16%;
+  right: 16%;
+  top: 12%;
+  bottom: 14%;
+  background: linear-gradient(180deg, #fffdf8, #fbf5e9);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(42, 20, 32, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 9%;
+  gap: 0.4rem;
+  text-align: center;
+  /* above the opened flap (JS drops it to z 1), below the pocket flaps (z 3) */
+  z-index: 2;
+}
+
+.env-card-mono {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  color: var(--ink);
+}
+
+.env-card-mono span {
+  color: var(--pink);
+  font-family: var(--font-amp);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.env-card-line {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+/* pocket flaps — each carries its own fold shading and a crisp seam */
+.env-flap-left,
+.env-flap-right,
+.env-flap-bottom {
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 14px 14px;
+  z-index: 3;
+  /* the pocket hides the card while it waits inside */
+}
+
+/* flap fold tips stay sharp — rounding them reads as cut paper */
+.env-flap-left {
+  background: linear-gradient(105deg, var(--paper) 0%, var(--paper-shade) 85%);
+  clip-path: polygon(0 0, 54% 50%, 0 100%);
+  filter: drop-shadow(1px 0 1px rgba(42, 20, 32, 0.10));
+}
+
+.env-flap-right {
+  background: linear-gradient(255deg, var(--paper) 0%, var(--paper-shade) 85%);
+  clip-path: polygon(100% 0, 100% 100%, 46% 50%);
+  filter: drop-shadow(-1px 0 1px rgba(42, 20, 32, 0.10));
+}
+
+.env-flap-bottom {
+  background: linear-gradient(180deg, var(--paper-shade) 0%, var(--paper) 55%);
+  clip-path: polygon(0 100%, 50% 38%, 100% 100%);
+  filter: drop-shadow(0 -1px 1px rgba(42, 20, 32, 0.12));
+}
+
+/* the opening flap — outer face cream, inner face revealed as it lifts */
+.env-flap-top {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 54%;
+  background: linear-gradient(180deg, var(--paper) 30%, var(--paper-shade) 100%);
+  /* polygon fallback, then shape(): only the flap TIP is rounded —
+     the top corners stay square */
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  clip-path: shape(from 0% 0%, hline to 100%, line to 58% 84%, curve to 42% 84% with 50% 100%, close);
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 2px 2px rgba(42, 20, 32, 0.14));
+  z-index: 4;
+}
+
+.env-flap-inner {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #dcc9a6 0%, #e7d6b6 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  clip-path: shape(from 0% 0%, hline to 100%, line to 58% 84%, curve to 42% 84% with 50% 100%, close);
+  opacity: 0;
+  /* fades in as the flap passes vertical */
+}
+
+.env-seal-wrap {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  translate: -50% -50%;
+  width: 24%;
+  aspect-ratio: 1;
+  z-index: 5;
+  mix-blend-mode: multiply;
+}
+
+/* two copies of the seal art, split along an irregular crack line —
+   at rest they align seamlessly and read as one unbroken seal */
+.env-seal-half {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  filter: brightness(1.06) contrast(1.04);
+}
+
+.env-seal-half--l {
+  clip-path: polygon(0 0, 55% 0, 47% 16%, 56% 33%, 46% 51%, 55% 69%, 47% 85%, 53% 100%, 0 100%);
+  transform-origin: 38% 58%;
+}
+
+.env-seal-half--r {
+  clip-path: polygon(55% 0, 100% 0, 100% 100%, 53% 100%, 47% 85%, 55% 69%, 46% 51%, 56% 33%, 47% 16%);
+  transform-origin: 64% 58%;
+}
+
+/* one even paper grain across the whole envelope — no corner blotches */
+.env-texture {
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 14px 14px;
+  background: url("../images/paper-texture-cream.jpg") center / 130% auto;
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.env-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+/* ── Scripture interludes ─────────────────────────────────── */
+
+/* shared canvas for all watercolor shaders */
+.wc {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.interlude {
+  position: relative;
+  min-height: 88vh;
+  display: grid;
+  place-items: center;
+  padding: 6rem 1.5rem;
+  overflow: hidden;
+}
+
+/* image washes remain only as the no-WebGL fallback; the shader replaces
+   them (.wc-live) so pigment dissolves into the page with torn edges
+   instead of ending at the section box */
+.interlude--cream {
+  background: var(--cream) url("../images/wash-interlude-cream.jpg") center / cover no-repeat;
+}
+
+.interlude--cream::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 243, 232, 0.55);
+}
+
+/* very light plum: a pale mauve veil, ink text on top */
+.interlude--plum {
+  background: var(--plum-soft) url("../images/wash-interlude-plum.jpg") center / cover no-repeat;
+}
+
+.interlude--plum::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(243, 231, 238, 0.85);
+}
+
+.interlude--cream.wc-live,
+.interlude--plum.wc-live {
+  background: var(--cream);
+}
+
+.interlude--cream.wc-live::after,
+.interlude--plum.wc-live::after {
+  display: none;
+}
+
+.interlude-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  text-align: center;
+}
+
+.verse-mark {
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+  color: var(--gold-deep);
+}
+
+.verse {
+  margin: 0;
+}
+
+.verse p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.verse cite {
+  display: block;
+  margin-top: 1.75rem;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.85rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.verse-echo {
+  margin: 2.25rem 0 0;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+/* ── Event details — full-bleed over living watercolor ────── */
+
+.details {
+  position: relative;
+  padding: clamp(6rem, 14vh, 10rem) 1.5rem;
+  background: var(--cream);
+  overflow: hidden;
+}
+
+/* no z-index here: a stacking context would isolate the sprigs'
+   multiply blend from the canvas below (positioned DOM order already
+   paints this above the canvas) */
+.details-inner {
+  position: relative;
+  max-width: 62rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.details-open {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.6vw, 1.45rem);
+  color: var(--ink);
+}
+
+.details-parents {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.4em 0.75em;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.details-parents-sep {
+  color: var(--gold-deep);
+}
+
+.details-names {
+  margin: clamp(2rem, 5vh, 3.5rem) 0 1rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 10vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.details-names span {
+  color: var(--pink);
+  font-family: var(--font-amp);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.65em;
+}
+
+.details-sub {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  color: var(--ink);
+}
+
+.acts {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  margin-top: clamp(3.5rem, 9vh, 6rem);
+}
+
+.acts-divider {
+  width: 1px;
+  height: 100%;
+  min-height: 16rem;
+  background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+  transform-origin: top center;
+}
+
+.act {
+  position: relative;
+}
+
+.act-sprig {
+  width: clamp(3.25rem, 7vw, 4.5rem);
+  margin: 0 auto 1.25rem;
+  mix-blend-mode: multiply;
+  filter: brightness(1.08) contrast(1.05);
+}
+
+.act-label {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  color: var(--pink);
+}
+
+.act-time {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.act-time-big {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(3.25rem, 9vw, 5.5rem);
+  line-height: 1;
+  color: var(--ink);
+}
+
+.act-time-mer {
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.act-rule {
+  width: clamp(4rem, 10vw, 7rem);
+  margin: 1.5rem auto;
+  border: 0;
+  border-top: 1px solid var(--gold);
+  transform-origin: center;
+}
+
+.act-date {
+  margin: 0 0 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.act-venue {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.act-place {
+  margin: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+@media (max-width: 720px) {
+  .acts {
+    grid-template-columns: 1fr;
+  }
+
+  .acts-divider {
+    width: min(14rem, 60%);
+    height: 1px;
+    min-height: 0;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+  }
+}
+
+/* word-reveal spans (JS wraps [data-words] content) */
+.w {
+  display: inline-block;
+}
+
+/* ── Gallery ──────────────────────────────────────────────── */
+
+.gallery {
+  /* cream, not cream-deep: the interludes' torn wash edges dissolve into
+     the page color, so neighbors must share it or the line reappears */
+  position: relative;
+  /* anchors the blossom spray */
+  padding: clamp(4rem, 10vh, 7rem) 1.5rem;
+  background: var(--cream);
+  overflow: hidden;
+  /* depth for the scroll-velocity wobble of the whole frame shelf */
+  perspective: 1200px;
+}
+
+.gallery-title {
+  margin: 0 0 3rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  color: var(--ink);
+}
+
+.gallery-frames {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  max-width: 60rem;
+  margin: 0 auto;
+  /* one shared vanishing point so the two frames tilt toward each
+     other like a gatefold while the scroll choreography runs */
+  perspective: 1100px;
+}
+
+.frame {
+  margin: 0;
+  flex: 0 1 24rem;
+  padding: 0.9rem 0.9rem 3rem;
+  background: #fffdf8;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  box-shadow: 0 6px 8px -4px rgba(42, 20, 32, 0.25);
+}
+
+.frame img {
+  border-radius: 2px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.frame--left {
+  rotate: -2.2deg;
+}
+
+.frame--right {
+  rotate: 1.8deg;
+}
+
+/* ── Closing ──────────────────────────────────────────────── */
+
+.closing {
+  /* plain page cream: seamless after the gallery — the room gradient
+     lives on the finale stage below and fades in on approach */
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+
+/* the plum wash band behind the farewell words — painted live by the
+   dark shader; this background is the fallback when WebGL is missing */
+.closing-wash {
+  position: relative;
+  background: var(--plum-soft) url("../images/wash-interlude-plum.jpg") center / cover no-repeat;
+}
+
+.closing-wash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(243, 231, 238, 0.85);
+}
+
+.closing.wc-live .closing-wash {
+  background: none;
+}
+
+.closing.wc-live .closing-wash::after {
+  display: none;
+}
+
+.closing-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: clamp(5rem, 12vh, 8rem) 1.5rem clamp(4rem, 10vh, 7rem);
+  text-align: center;
+}
+
+.closing-note {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.closing-sign {
+  margin: 3rem 0 0.25rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.closing-names {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--ink);
+}
+
+/* the finale stage — a full-viewport copy of the intro's envelope
+   room (same gradient, same layout, same gap), so the last frame is
+   the first frame. Its top edge dissolves into the section cream so
+   the room seems to gather again as the guest arrives. */
+.mini-envelope {
+  margin-top: 3rem;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  background:
+    radial-gradient(110% 80% at 50% 30%, rgba(213, 0, 109, 0.05), transparent 55%),
+    radial-gradient(140% 110% at 50% 45%, var(--cream) 0%, var(--cream-deep) 58%, #dfc9a8 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%);
+}
+
+/* same footprint as .envelope in the intro — the layout box is the
+   final resting size; GSAP scales it up from small inside this box */
+.mini-env-body {
+  position: relative;
+  width: min(33rem, 88vw);
+  aspect-ratio: 8 / 5.4;
+  perspective: 1400px;
+}
+
+.mini-env-card {
+  position: absolute;
+  inset: 6% 5% 10%;
+  background: #fffdf8;
+  border-radius: 4px;
+}
+
+.mini-env-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #eddcbf, var(--paper));
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 14px 30px -18px rgba(42, 20, 32, 0.45);
+}
+
+.mini-env-pocket {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--paper-shade) 0%, var(--paper) 55%);
+  border-radius: 0 0 14px 14px;
+  clip-path: polygon(0 0, 50% 46%, 100% 0, 100% 100%, 0 100%);
+}
+
+.mini-env-flap {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 54%;
+  background: linear-gradient(180deg, var(--paper) 30%, var(--paper-shade) 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  clip-path: shape(from 0% 0%, hline to 100%, line to 58% 84%, curve to 42% 84% with 50% 100%, close);
+  transform-origin: top center;
+  transform: rotateX(-180deg);
+}
+
+.mini-env-seal {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  translate: -50% -50%;
+  width: 24%;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  filter: brightness(1.06) contrast(1.04);
+  opacity: 0;
+}
+
+/* the same paper grain the intro envelope wears */
+.mini-env-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 14px 14px;
+  background: url("../images/paper-texture-cream.jpg") center / 130% auto;
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* styled as the twin of .env-hint under the intro envelope */
+.mini-env-caption {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+/* ── Blossoms — still watercolor sprays on the light sections ── */
+
+/* True-alpha cuts of the blossom paintings, placed flush against
+   section corners/edges so the frame crops them like the artwork
+   crops its own page. They never move — JS only dissolves them in
+   and out with their section (opacity + blur, nothing else), so the
+   CSS flips below are never overwritten. Without JS (or with
+   reduced motion) they simply sit there, visible. */
+
+.blossom {
+  position: absolute;
+  pointer-events: none;
+}
+
+.blossom--i1 {
+  left: -1.5%;
+  bottom: 14px;
+  width: min(100vw, 902px);
+  transform: rotate(12deg) translate(5px, -59px);
+}
+
+.blossom--details-tr {
+  /* flipped vertically so the branch sweeps UP from the right edge,
+     and dropped below the "invite you and your family…" line — its
+     tips rise past the names rather than drooping from the top */
+  top: 35%;
+  right: 0;
+  width: clamp(240px, 46vmin, 580px);
+  transform: scaleY(-1);
+}
+
+.blossom--details-bl {
+  bottom: 2%;
+  left: 0;
+  width: clamp(150px, 28vmin, 340px);
+  transform: scaleX(-1);
+}
+
+.blossom--gallery-tl {
+  top: 0;
+  left: 0;
+  width: clamp(200px, 40vmin, 500px);
+  transform: scaleX(-1);
+}
+
+@media (max-width: 640px) {
+  .blossom--details-tr {
+    width: clamp(170px, 48vw, 240px);
+  }
+
+  .blossom--gallery-tl {
+    width: clamp(150px, 42vw, 210px);
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-env-layer {
+    display: none !important;
+  }
+
+  .intro-hero {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  .mini-env-flap {
+    transform: rotateX(0deg);
+  }
+
+  .mini-env-seal {
+    opacity: 1;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
