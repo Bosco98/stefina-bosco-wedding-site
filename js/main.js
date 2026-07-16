@@ -41,12 +41,11 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     // until just before the pin releases
     .to("#envArrow", { autoAlpha: 0, duration: 0.08 }, 0.88)
 
-    // the wax snaps: a brief press, then the seal cracks in two and
-    // the halves tumble away from the break line
+    // the wax releases whole: a brief press, then the seal lifts off
+    // the paper intact and dissolves — never broken (a cracked seal
+    // reads as a bad omen)
     .to("#envSealWrap", { scale: 1.05, duration: 0.025, ease: "power1.out" }, 0.03)
-    .to(".env-seal-half--l", { xPercent: -14, yPercent: 16, rotation: -11, duration: 0.06, ease: "power1.in" }, 0.06)
-    .to(".env-seal-half--r", { xPercent: 13, yPercent: 20, rotation: 10, duration: 0.06, ease: "power1.in" }, 0.06)
-    .to(".env-seal-half", { autoAlpha: 0, yPercent: "+=26", duration: 0.045, ease: "power1.in" }, 0.095)
+    .to("#envSealWrap", { y: -34, scale: 1.16, autoAlpha: 0, duration: 0.085, ease: "power1.in" }, 0.06)
 
     // the flap lifts past the guest; its inner face darkens as it turns
     .to("#envFlap", { rotateX: -168, duration: 0.16, ease: "power1.inOut" }, 0.13)

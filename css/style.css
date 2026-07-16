@@ -359,23 +359,11 @@ html:not(.js) .intro-env-layer {
   mix-blend-mode: multiply;
 }
 
-/* two copies of the seal art, split along an irregular crack line —
-   at rest they align seamlessly and read as one unbroken seal */
-.env-seal-half {
+.env-seal {
   position: absolute;
   inset: 0;
   width: 100%;
   filter: brightness(1.06) contrast(1.04);
-}
-
-.env-seal-half--l {
-  clip-path: polygon(0 0, 55% 0, 47% 16%, 56% 33%, 46% 51%, 55% 69%, 47% 85%, 53% 100%, 0 100%);
-  transform-origin: 38% 58%;
-}
-
-.env-seal-half--r {
-  clip-path: polygon(55% 0, 100% 0, 100% 100%, 53% 100%, 47% 85%, 55% 69%, 46% 51%, 56% 33%, 47% 16%);
-  transform-origin: 64% 58%;
 }
 
 /* one even paper grain across the whole envelope — no corner blotches */
