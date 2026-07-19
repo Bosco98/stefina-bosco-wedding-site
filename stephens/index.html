@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- add .js before first paint so the sealed envelope is the opening
+       frame; stephens.js removes it again if GSAP/Lenis fail to load -->
+  <script>document.documentElement.classList.add("js");</script>
+
+  <!-- Google Analytics (GA4) — same property as the main invitation -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RG49W72QXF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RG49W72QXF');
+  </script>
+
+  <title>Bosco &amp; Stefina — With love from the Palliyil family</title>
+  <meta name="description" content="Mrs. Raxey & Mr. Stephen Paul warmly invite you to the wedding of their daughter Stefina with Bosco — 3:30 pm, Wednesday, January 6th, 2027, St. Francis of Assisi Cathedral, Ernakulam.">
+  <link rel="canonical" href="https://stefinawedsbosco.com/stephens/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stefina Palliyil &amp; Bosco Correa">
+  <meta name="theme-color" content="#eef2fb">
+
+  <!-- Open Graph / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Bosco &amp; Stefina">
+  <meta property="og:title" content="Bosco &amp; Stefina — You are Invited">
+  <meta property="og:description" content="With the blessings of the Palliyil family — celebrate the Holy Matrimony of Stefina with Bosco, January 6th, 2027, Ernakulam.">
+  <meta property="og:url" content="https://stefinawedsbosco.com/stephens/">
+  <meta property="og:image" content="https://stefinawedsbosco.com/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bosco &amp; Stefina — You are Invited">
+  <meta name="twitter:image" content="https://stefinawedsbosco.com/images/og-image.jpg">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Sacramento&display=swap" rel="stylesheet">
+
+  <!-- bump ?v= on both this and stephens.js together when either changes -->
+  <link rel="stylesheet" href="../css/stephens.css?v=1">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "The Wedding of Stefina & Bosco",
+    "description": "The Holy Matrimony of Stefina Palliyil & Bosco Correa, with the blessings of the Palliyil family.",
+    "startDate": "2027-01-06T15:30:00+05:30",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "image": "https://stefinawedsbosco.com/images/og-image.jpg",
+    "url": "https://stefinawedsbosco.com/stephens/",
+    "location": {
+      "@type": "Place",
+      "name": "St. Francis of Assisi Roman Catholic Metropolitan Cathedral",
+      "address": { "@type": "PostalAddress", "addressLocality": "Ernakulam", "addressRegion": "Kerala", "addressCountry": "IN" }
+    },
+    "organizer": { "@type": "Organization", "name": "Palliyil & Correa Family" }
+  }
+  </script>
+</head>
+<body>
+
+  <main id="s-main">
+
+    <!-- ═══════════ PAGE 1 → 2 · Sealed envelope, tap to open ═══════════ -->
+    <section class="stage" id="stage">
+
+      <!-- decorative florals framing the sealed envelope -->
+      <img class="stage-bloom stage-bloom--tl" src="../images/stephens/blossom.webp" alt="" aria-hidden="true">
+      <img class="stage-bloom stage-bloom--br" src="../images/stephens/blossom-branch.webp" alt="" aria-hidden="true">
+
+      <!-- the sealed envelope (PDF p.1) -->
+      <div class="sealed" id="sealed">
+        <div class="env" id="env">
+          <img class="env-art" src="../images/stephens/envelope.webp"
+               alt="A royal-blue envelope with lace trim, sealed with a wax seal">
+          <div class="env-seal" id="envSeal">
+            <img src="../images/stephens/seal.webp" alt="" aria-hidden="true">
+            <span class="env-seal-mono">B <i>&amp;</i> S</span>
+          </div>
+        </div>
+        <button type="button" class="tap-hint" id="tapHint" aria-label="Open the invitation">
+          <span>Tap to open</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- the opened envelope tableau (PDF p.2) — assembled on tap -->
+      <div class="opened" id="opened" aria-hidden="true">
+        <img class="op-flap" src="../images/stephens/open-flap.webp" alt="" aria-hidden="true">
+        <figure class="op-card" id="opCard">
+          <img src="../images/stephens/church-scene.webp" alt="Watercolour of Bosco and Stefina before St. Francis of Assisi Cathedral">
+          <figcaption>You are Invited!</figcaption>
+        </figure>
+        <img class="op-pocket" src="../images/stephens/env-pocket.webp" alt="" aria-hidden="true">
+      </div>
+    </section>
+
+    <!-- ═══════════ PAGE 3 · Hero ═══════════ -->
+    <section class="hero" id="hero">
+      <img class="bloom bloom--hero-tl" src="../images/stephens/sprig.webp" data-drift="70" alt="" aria-hidden="true">
+
+      <div class="hero-head">
+        <p class="hero-eyebrow">Wedding <span>of</span></p>
+        <h1 class="hero-title">Bosco <span class="amp">&amp;</span> Stefina</h1>
+      </div>
+
+      <div class="hero-panel">
+        <img class="bloom bloom--hero-br" src="../images/stephens/spray.webp" data-drift="90" alt="" aria-hidden="true">
+        <figure class="frame frame--lace" id="heroFrame">
+          <img src="../images/stephens/church-scene.webp" alt="Watercolour of Bosco and Stefina before St. Francis of Assisi Cathedral, Ernakulam">
+        </figure>
+
+        <blockquote class="verse" data-reveal>
+          <p>“He will fulfil what<br>He has planned for me.”</p>
+          <cite>Job 23 : 14</cite>
+        </blockquote>
+        <p class="hero-tag" data-reveal>God’s Plan — and we have decided.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════ PAGE 4 · The invitation ═══════════ -->
+    <section class="invite" id="invite">
+      <div class="card card--chain">
+        <p class="type" data-words>We, Mrs.&nbsp;Raxey &amp; Mr.&nbsp;Stephen Paul,</p>
+        <p class="type" data-words>warmly invite you and your family to</p>
+        <p class="type" data-words>the wedding of our daughter</p>
+
+        <p class="script-name" data-reveal>Stefina</p>
+        <p class="type type--with" data-reveal>with</p>
+        <p class="script-name" data-reveal>Bosco</p>
+
+        <p class="type type--dim" data-words>S/o Mrs.&nbsp;Ruby &amp; Mr.&nbsp;Hilary Correa</p>
+
+        <div class="event">
+          <p class="event-title type">The Wedding Ceremony</p>
+          <p class="type type--dim">on</p>
+          <p class="type event-line">Wednesday, January 06, 2027 · 3:30&nbsp;PM</p>
+          <p class="type type--dim">at</p>
+          <p class="type event-line">St.&nbsp;Francis of Assisi Roman Catholic<br>Metropolitan Cathedral, Ernakulam</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=St+Francis+Assisi+Roman+Catholic+Metropolitan+Cathedral+Ernakulam" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+            <span>View on map</span>
+          </a>
+        </div>
+
+        <div class="event">
+          <p class="event-title type">The Reception</p>
+          <p class="type type--dim">at</p>
+          <p class="type event-line">Alpha Horizon, Vallarpadam,<br>Kochi, Ernakulam</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Alpha+Horizon+Vallarpadam+Kochi" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+            <span>View on map</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PAGE 5 · Save the date ═══════════ -->
+    <section class="std" id="std">
+      <img class="bloom bloom--std-tr" src="../images/stephens/blossom.webp" data-drift="120" alt="" aria-hidden="true">
+      <img class="bloom bloom--std-bl" src="../images/stephens/blossom-branch.webp" data-drift="150" alt="" aria-hidden="true">
+
+      <div class="std-panel">
+        <p class="std-kicker type" data-reveal>Save the Date</p>
+        <p class="std-date type" data-reveal>Wednesday,<br>January 06, 2027</p>
+
+        <!-- champagne toast doodles -->
+        <svg class="flute flute--l" viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 8h22c-1 12-5 20-11 22-6-2-10-10-11-22z"/><path d="M33 30v34"/><path d="M22 66h22"/>
+          <circle cx="30" cy="6" r="1.4"/><circle cx="38" cy="14" r="1.2"/><circle cx="26" cy="16" r="1.2"/>
+        </svg>
+        <svg class="flute flute--r" viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 8h22c-1 12-5 20-11 22-6-2-10-10-11-22z"/><path d="M33 30v34"/><path d="M22 66h22"/>
+          <circle cx="30" cy="6" r="1.4"/><circle cx="38" cy="14" r="1.2"/><circle cx="26" cy="16" r="1.2"/>
+        </svg>
+
+        <p class="std-presence" data-reveal>Your presence is the<br>greatest gift of all</p>
+
+        <!-- the photo reel drops out of a silver slot as you scroll -->
+        <div class="film">
+          <div class="film-feed">
+            <div class="film-strip" id="filmStrip">
+              <div class="film-window"><img src="../images/stephens/photo-couple.webp" alt="Bosco and Stefina"></div>
+              <div class="film-window"><img src="../images/stephens/photo-church.webp" alt="The cathedral"></div>
+              <div class="film-window"><img src="../images/stephens/photo-car.webp" alt="Just married, driving away"></div>
+              <p class="film-caption"><i class="spark">&#10022;</i>Bosco <span>and</span> Stefina<i class="spark">&#10022;</i></p>
+              <div class="film-checker" aria-hidden="true"></div>
+            </div>
+          </div>
+          <img class="film-slot" src="../images/stephens/slot.webp" alt="" aria-hidden="true">
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PAGE 6 · Finale (car + compliments) ═══════════ -->
+    <section class="finale" id="finale">
+      <div class="car-lane">
+        <div class="car-wrap" id="carWrap">
+          <img class="car" src="../images/stephens/car.webp" alt="Bosco and Stefina driving away, just married">
+        </div>
+      </div>
+
+      <div class="card card--gold-lace" data-reveal>
+        <p class="compliments-lead type">with best compliments from</p>
+        <p class="compliments type">Jerry Paul &amp; Annie Jerry,</p>
+        <p class="compliments type">Joy Paul &amp; Family and</p>
+        <p class="compliments type">Sanyarose Stephen</p>
+      </div>
+
+      <p class="finale-sign"><span>See you there</span></p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../js/stephens.js?v=1"></script>
+</body>
+</html>
