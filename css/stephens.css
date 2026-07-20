@@ -10,7 +10,7 @@
   --ink:      #22409b;   /* royal-blue text */
   --ink-deep: #1a2a6c;   /* navy */
   --ink-soft: #4a63b4;   /* dimmed blue */
-  --gold:     #f6b81f;   /* marigold panel */
+  --gold:     #ecae28;   /* marigold panel — matches lace-frame.jpg's bg exactly */
   --gold-deep:#e6a20c;
   --gold-line:#d99b12;
   --cream:    #fbf6e2;   /* card paper */
@@ -26,18 +26,23 @@
 }
 
 html, body { margin: 0; padding: 0; }
+/* hard-stop any horizontal overflow on BOTH roots — iOS expands the
+   layout viewport if only body hides it, shifting the whole page */
+html, body { overflow-x: hidden; overflow-x: clip; }
 
 body {
   font-family: var(--ff-type);
   color: var(--ink);
   background-color: #eef2fb;
-  /* woven paper warmth under the azulejo tile */
+  /* azulejo tile softened to the PDF's pale wash by a cream veil,
+     woven paper warmth underneath */
   background-image:
+    linear-gradient(rgba(251,246,230,.5), rgba(251,246,230,.5)),
     url("../images/stephens/tile.webp"),
     url("../images/stephens/paper.webp");
-  background-repeat: repeat, repeat;
-  background-size: 300px 300px, 700px auto;
-  background-attachment: fixed, fixed;
+  background-repeat: repeat, repeat, repeat;
+  background-size: auto, 220px 220px, 700px auto;
+  background-attachment: fixed, fixed, fixed;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -84,10 +89,11 @@ html.js .stage.is-overlay {
   z-index: 60;
   background-color: #eef2fb;
   background-image:
+    linear-gradient(rgba(251,246,230,.5), rgba(251,246,230,.5)),
     url("../images/stephens/tile.webp"),
     url("../images/stephens/paper.webp");
-  background-repeat: repeat, repeat;
-  background-size: 300px 300px, 700px auto;
+  background-repeat: repeat, repeat, repeat;
+  background-size: auto, 220px 220px, 700px auto;
 }
 /* the sealed envelope and the opened tableau share one centred cell so the
    card appears to rise out of the very same envelope */
@@ -195,19 +201,21 @@ html.js .opened { opacity: 0; }               /* JS reveals; assembled on tap */
   width: 66%;
   margin: 0;
   background: var(--cream-2);
-  padding: 6% 6% 4%;
+  padding: 6%;
   border-radius: 3px;
   box-shadow: 0 16px 26px rgba(26,42,108,.26);
   z-index: 2;
 }
 .op-card img { border-radius: 2px; }
-.op-card figcaption {
-  text-align: center;
-  font-family: var(--ff-hand);
-  color: var(--ink);
-  font-size: clamp(24px, 7vw, 36px);
-  line-height: 1;
-  padding: 7px 0 2px;
+/* greenery spilling out of the envelope mouth (PDF p.2, right side) */
+.op-sprig {
+  position: absolute;
+  top: 3%;
+  right: -14%;
+  width: 62%;
+  z-index: 2;
+  transform: rotate(14deg);
+  filter: drop-shadow(0 6px 10px rgba(26,42,108,.18));
 }
 .op-pocket {
   position: absolute;
@@ -216,6 +224,48 @@ html.js .opened { opacity: 0; }               /* JS reveals; assembled on tap */
   width: 100%;
   z-index: 3;
   filter: drop-shadow(0 16px 24px rgba(26,42,108,.28));
+}
+/* the lace-doily calling card dropped across the envelope's foot (PDF p.2) */
+.op-invited {
+  position: absolute;
+  right: -2%;
+  bottom: -9%;
+  width: 68%;
+  margin: 0;
+  z-index: 4;
+  background: var(--cream-2);
+  border-radius: 6px;
+  padding: clamp(16px, 5vw, 26px) 10px;
+  text-align: center;
+  font-family: var(--ff-hand);
+  font-size: clamp(28px, 8.4vw, 42px);
+  line-height: 1.04;
+  color: var(--ink);
+  transform: rotate(-4deg);
+  box-shadow: 0 18px 30px rgba(26,42,108,.30);
+}
+.op-invited::before {
+  /* white scalloped doily ring, outside the paper */
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 8px 8px, var(--white) 7px, transparent 7.5px) 0 0 / 16px 16px;
+  padding: 11px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.op-invited::after {
+  /* thin gold keyline just inside the paper */
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 3px;
+  pointer-events: none;
 }
 
 /* fallback when JS/CDN never arrive: no lock, envelope stays sealed but
@@ -227,6 +277,10 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
 /* ════════════════ PAGE 3 · HERO ════════════════ */
 
 .hero {
+  /* the marigold band is full-bleed; only the head + panel contents
+     keep the portrait column */
+  max-width: none;
+  padding-inline: 0;
   text-align: center;
   padding-top: clamp(40px, 10vh, 88px);
   padding-bottom: clamp(34px, 8vh, 70px);
@@ -236,7 +290,9 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
    over the busy azulejo (mirrors the PDF's clear top band) */
 .hero-head {
   position: relative;
-  padding: clamp(20px, 6vw, 40px) 0 clamp(26px, 7vw, 46px);
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: clamp(20px, 6vw, 40px) var(--pad) clamp(30px, 9vw, 56px);
 }
 .hero-head::before {
   content: "";
@@ -259,79 +315,109 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
   font-family: var(--ff-script);
   font-weight: 400;
   color: var(--ink);
-  font-size: clamp(52px, 16vw, 94px);
+  font-size: clamp(52px, 16vw, 70px);
   line-height: .96;
   margin: .05em 0 0;
   text-shadow: 0 2px 0 rgba(255,255,255,.6);
 }
 .hero-title .amp { font-size: .8em; opacity: .82; }
 
-/* the marigold panel behind the framed art + verse (PDF p.3 lower two-thirds) */
+/* the full-bleed marigold band (PDF p.3 lower two-thirds): a flat gold
+   field with big wavy scallops where it meets the tile, top and bottom */
 .hero-panel {
   position: relative;
   background: var(--gold);
-  border-radius: 12px;
-  padding: clamp(34px, 9vw, 60px) clamp(18px, 5vw, 34px) clamp(30px, 8vw, 54px);
-  box-shadow: 0 24px 46px rgba(26,42,108,.22);
-  outline: 2px solid rgba(255,255,255,.55);
-  outline-offset: -12px;
+  padding: clamp(16px, 4.5vw, 30px) 0 clamp(30px, 8vw, 54px);
+  margin-top: clamp(28px, 8vw, 50px);
+}
+.hero-panel::before {
+  /* broad, gentle wave rising into the tile above */
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 22px;
+  background:
+    radial-gradient(circle at 48px 98px, var(--gold) 90px, transparent 91px) center bottom / 96px 22px repeat-x;
+  pointer-events: none;
+}
+.hero-panel::after {
+  /* broad, gentle wave dipping into the tile below */
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 22px;
+  background:
+    radial-gradient(circle at 48px -76px, var(--gold) 90px, transparent 91px) center top / 96px 22px repeat-x;
+  pointer-events: none;
+}
+.hero-panel-in {
+  position: relative;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--pad);
 }
 
-/* scalloped white lace frame around the church art */
-.frame--lace {
+/* the big lace doily frame — a single painted asset (lace-frame.png,
+   flat gold bg matching var(--gold)); it stays static, only the church
+   scene inside its window animates */
+.frame--doily {
   position: relative;
-  margin: 0 auto clamp(24px, 6vw, 42px);
-  width: min(80%, 360px);
-  padding: clamp(14px, 4vw, 22px);
-  background: var(--cream-2);
-  border-radius: 4px;
-  box-shadow: 0 16px 30px rgba(26,42,108,.28);
+  z-index: 1;
+  width: min(76%, 340px);
+  margin: clamp(6px, 2vw, 16px) auto clamp(22px, 6vw, 38px);
 }
-.frame--lace::before {
-  /* white scalloped doily edge — masked to the outer ring only so the
-     dot grid never bleeds into the picture area */
-  content: "";
+.frame--doily .doily { width: 100%; display: block; }
+/* the church scene sits ON TOP of the doily, larger than its painted
+   window — only the outer scallop ring of lace stays visible around it.
+   Multiply-blend + a feathered mask melt the art's cream paper into the
+   doily's cream, so the watercolour reads as painted on the lace,
+   never as a pasted rectangle */
+/* the blank cream panel inside the fine gold dot band:
+   measured off lace-frame.jpg (752×984) */
+.doily-win {
   position: absolute;
-  inset: -11px;
-  border-radius: 10px;
-  background:
-    radial-gradient(circle at 9px 9px, var(--white) 8px, transparent 8.5px) 0 0 / 18px 18px;
-  padding: 12px;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
+  inset: 14.4% 16.9% 14.7% 17%;
+  overflow: hidden;
 }
-.frame--lace::after {
-  /* thin gold keyline just inside the paper */
-  content: "";
-  position: absolute;
-  inset: 6px;
-  border: 1.5px solid var(--gold-line);
-  border-radius: 2px;
-  pointer-events: none;
+.doily-win img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  filter: brightness(1.06) contrast(1.04);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-composite: intersect;
 }
-.frame--lace img { border-radius: 2px; position: relative; }
 
 .verse {
   margin: 0 auto;
   max-width: 34ch;
 }
+/* the verse is blue handwriting on the marigold, as printed (PDF p.3) */
 .verse p {
   font-family: var(--ff-hand);
-  font-size: clamp(27px, 7.6vw, 40px);
+  font-size: clamp(26px, 7.4vw, 38px);
   line-height: 1.22;
   color: var(--ink);
-  margin: 0 0 .15em;
-  text-shadow: 0 1px 6px rgba(255,255,255,.35);
+  margin: 0;
+  text-shadow: 0 1px 0 rgba(255,255,255,.3);
 }
 .verse cite {
-  font-family: var(--ff-type);
+  font-family: var(--ff-hand);
   font-style: normal;
-  font-weight: 700;
-  letter-spacing: .12em;
-  font-size: clamp(12px, 3.2vw, 14px);
-  color: var(--ink-deep);
+  font-size: .95em;
+  color: inherit;
+  white-space: nowrap;
 }
 .hero-tag {
   font-family: var(--ff-type);
@@ -339,10 +425,34 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
   letter-spacing: .05em;
   font-size: clamp(13px, 3.6vw, 16px);
   color: var(--ink-deep);
-  margin-top: clamp(16px, 4vw, 26px);
+  margin-top: clamp(18px, 5vw, 30px);
 }
 /* the tall hero sprays read on yellow, not tile */
 .bloom--hero-br { z-index: 1; }
+
+/* florals tucked into the doily's corners (positioned off the frame,
+   so they can never be cropped by the viewport edge) */
+.bloom--hero-fl1 {
+  top: -4%;
+  left: -9%;
+  width: clamp(64px, 18vw, 100px);
+  transform: rotate(-14deg);
+  z-index: 2;
+}
+.bloom--hero-fl2 {
+  top: 30%;
+  right: -11%;
+  width: clamp(76px, 21vw, 120px);
+  transform: rotate(24deg);
+  z-index: 2;
+}
+.bloom--hero-fl3 {
+  bottom: -5%;
+  left: -9%;
+  width: clamp(70px, 19vw, 108px);
+  transform: scaleX(-1) rotate(12deg);
+  z-index: 2;
+}
 
 /* ════════════════ PAGE 4 · INVITATION ════════════════ */
 
@@ -428,27 +538,32 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
 
 .std { padding-block: clamp(30px, 8vh, 70px); }
 
+/* the panel is an ornate bracket silhouette (the .std-shape SVG),
+   never a box — the azulejo tile shows through around its curves */
 .std-panel {
   position: relative;
-  background: var(--gold);
   color: var(--ink-deep);
-  border-radius: 10px;
-  padding: clamp(30px, 8vw, 54px) clamp(20px, 6vw, 40px) clamp(40px, 9vw, 60px);
+  padding: clamp(38px, 10vw, 64px) clamp(26px, 8vw, 48px) clamp(46px, 11vw, 70px);
   text-align: center;
-  overflow: hidden;
-  box-shadow: 0 24px 46px rgba(26,42,108,.22);
-  /* ornate nested outline (PDF p.5) */
-  outline: 2px solid rgba(255,255,255,.6);
-  outline-offset: -12px;
 }
-.std-panel::before {
-  content: "";
+.std-shape {
   position: absolute;
-  inset: 18px;
-  border: 1.5px solid rgba(255,255,255,.5);
-  border-radius: 6px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  filter: drop-shadow(0 20px 34px rgba(26,42,108,.22));
   pointer-events: none;
 }
+.std-shape-fill { fill: var(--gold); }
+.std-shape-line {
+  fill: none;
+  stroke: rgba(255,255,255,.75);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+/* everything else floats above the gold silhouette */
+.std-kicker, .std-date, .std-presence, .film { position: relative; z-index: 1; }
 
 .std-kicker {
   color: var(--ink-deep);
@@ -464,24 +579,56 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
   line-height: 1.5;
   margin-bottom: .4em;
 }
+
 .std-presence {
   font-family: var(--ff-hand);
   color: var(--white);
   font-size: clamp(30px, 9vw, 46px);
   line-height: 1.15;
   margin: clamp(14px, 4vw, 24px) 0 clamp(20px, 6vw, 34px);
-  text-shadow: 0 2px 8px rgba(26,42,108,.18);
+  text-shadow: 0 1px 2px rgba(26,42,108,.25), 0 4px 12px rgba(26,42,108,.18);
+  transform: rotate(-3deg);
 }
 
+/* white blossoms tucked around the panel (PDF p.5) */
+.std-flower {
+  position: absolute;
+  width: clamp(54px, 15vw, 84px);
+  top: clamp(6px, 2vw, 16px);
+  opacity: .95;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(26,42,108,.14));
+}
+.std-flower--tl { left: clamp(4px, 2vw, 18px); transform: rotate(-14deg); }
+.std-flower--tr { right: clamp(4px, 2vw, 18px); transform: rotate(12deg) scaleX(-1); }
+.std-flower--br {
+  top: auto;
+  left: auto;
+  bottom: clamp(24px, 6vw, 60px);
+  right: clamp(2px, 1.5vw, 20px);
+  width: clamp(96px, 27vw, 160px);
+  transform: rotate(6deg);
+}
+
+/* hands raising champagne flutes, flanking the reel */
 .flute {
   position: absolute;
-  width: clamp(42px, 12vw, 62px);
+  width: clamp(74px, 20vw, 108px);
   color: var(--ink-deep);
-  opacity: .85;
-  top: clamp(120px, 34vw, 190px);
+  opacity: .9;
+  z-index: 1;
 }
-.flute--l { left: clamp(6px, 3vw, 22px); transform: rotate(-14deg); }
-.flute--r { right: clamp(6px, 3vw, 22px); transform: rotate(14deg) scaleX(-1); }
+.flute--l { left: clamp(2px, 1.5vw, 16px); top: 55%; transform: rotate(-10deg); }
+.flute--r { right: clamp(2px, 1.5vw, 16px); top: 26%; transform: rotate(10deg); }
+/* champagne bubbles drift up out of the glasses */
+.flute .bub { animation: bub 2.6s ease-in-out infinite; }
+.flute .bub:nth-of-type(2) { animation-delay: .9s; }
+.flute .bub:nth-of-type(3) { animation-delay: 1.6s; }
+@keyframes bub {
+  0%   { transform: translateY(0);    opacity: 1; }
+  70%  { transform: translateY(-7px); opacity: .25; }
+  100% { transform: translateY(-9px); opacity: 0; }
+}
 
 /* the photo reel — a blue film strip that drops out of a silver slot */
 :root { --reel-blue: #2f4ccf; --reel-perf: #1c2c9c; }
@@ -490,30 +637,46 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
   position: relative;
   width: min(72vw, 248px);
   margin: 0 auto;
-  padding-top: 20px;               /* room for the slot to sit on top */
+  padding-top: 24px;               /* room for the slot to sit on top */
 }
+/* a clean silver slot bar the reel feeds through */
 .film-slot {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 124%;
+  width: 120%;
+  height: 26px;
   z-index: 3;
-  filter: drop-shadow(0 7px 9px rgba(26,42,108,.28));
+  border-radius: 7px;
+  background: linear-gradient(#fdfdfd 0%, #d9dde4 30%, #c3c9d2 55%, #eceef2 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 8px 14px rgba(26,42,108,.26);
   pointer-events: none;
 }
-/* the slot's mouth clips the reel's top edge so it reads as fed-through */
+.film-slot::after {
+  /* the dark slit the strip emerges from */
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 6px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(#5a6070, #2c3040);
+}
+/* clips the reel's top edge so it reads as fed through the slot */
 .film-feed {
   position: relative;
   overflow: hidden;
-  padding-top: 14px;
-  margin-top: -2px;
+  padding-top: 22px;
+  margin-top: -22px;
 }
 .film-strip {
   position: relative;
   background: var(--reel-blue);
   padding: 13px 15px 10px;
-  border-radius: 2px;
   box-shadow: 0 16px 28px rgba(26,42,108,.34);
   will-change: transform;
 }
@@ -533,10 +696,14 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
   background: var(--white);
   margin: 0 auto 8px;
   padding: 4px;
-  border-radius: 1px;
   box-shadow: 0 1px 2px rgba(26,42,108,.18);
 }
-.film-window img { width: 100%; border-radius: 1px; display: block; }
+.film-window img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
 .film-caption {
   position: relative;
   font-family: var(--ff-script);
@@ -571,21 +738,64 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
   padding-top: clamp(40px, 10vh, 90px);
   padding-bottom: clamp(60px, 14vh, 120px);
 }
-.car-lane { overflow: hidden; padding: 10px 0 clamp(20px, 5vh, 40px); }
+
+/* the golden ribbon winding down behind the car (PDF p.6) */
+.ribbon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 420px);
+  color: var(--gold-deep);
+  opacity: .9;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.car-lane { position: relative; z-index: 1; overflow: hidden; padding: 10px 0 clamp(20px, 5vh, 40px); }
 .car-wrap {
   position: relative;
-  width: min(88vw, 380px);
+  width: min(44vw, 180px);
   margin: 0 auto;
   will-change: transform;
 }
 .car { width: 100%; filter: drop-shadow(0 14px 18px rgba(26,42,108,.18)); }
 
+/* the compliments card wears a lace doily + gold beading (PDF p.6) */
 .card--gold-lace {
   max-width: 420px;
   margin: 0 auto;
   background: var(--cream);
-  outline: 2px dashed var(--gold);
-  outline-offset: -12px;
+  z-index: 1;
+}
+.card--gold-lace::before {
+  /* fine gold beaded ring just inside the paper */
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 3px;
+  background:
+    radial-gradient(circle, var(--gold) 2.4px, transparent 2.8px) 0 0 / 12px 12px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% 12px no-repeat,
+    linear-gradient(#000 0 0) bottom / 100% 12px no-repeat,
+    linear-gradient(#000 0 0) left / 12px 100% no-repeat,
+    linear-gradient(#000 0 0) right / 12px 100% no-repeat;
+  pointer-events: none;
+}
+.card--gold-lace::after {
+  /* white scalloped doily ring around the outside */
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 8px 8px, var(--cream) 7px, transparent 7.5px) 0 0 / 16px 16px;
+  padding: 11px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
 }
 .compliments-lead { color: var(--ink-soft); font-weight: 400; margin-bottom: .8em; }
 .compliments {
@@ -627,4 +837,5 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
 /* ════════════════ reduced motion / no-JS ════════════════ */
 @media (prefers-reduced-motion: reduce) {
   .tap-hint svg { animation: none; }
+  .flute .bub { animation: none; }
 }

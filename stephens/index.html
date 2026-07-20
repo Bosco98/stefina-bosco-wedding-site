@@ -48,7 +48,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Sacramento&display=swap" rel="stylesheet">
 
   <!-- bump ?v= on both this and stephens.js together when either changes -->
-  <link rel="stylesheet" href="../css/stephens.css?v=1">
+  <link rel="stylesheet" href="../css/stephens.css?v=11">
 
   <script type="application/ld+json">
   {
@@ -100,11 +100,13 @@
       <!-- the opened envelope tableau (PDF p.2) — assembled on tap -->
       <div class="opened" id="opened" aria-hidden="true">
         <img class="op-flap" src="../images/stephens/open-flap.webp" alt="" aria-hidden="true">
+        <img class="op-sprig" src="../images/stephens/spray.webp" alt="" aria-hidden="true">
         <figure class="op-card" id="opCard">
           <img src="../images/stephens/church-scene.webp" alt="Watercolour of Bosco and Stefina before St. Francis of Assisi Cathedral">
-          <figcaption>You are Invited!</figcaption>
         </figure>
         <img class="op-pocket" src="../images/stephens/env-pocket.webp" alt="" aria-hidden="true">
+        <!-- the lace-doily calling card, dropped across the envelope's foot (PDF p.2) -->
+        <p class="op-invited" id="opInvited">You are<br>Invited!</p>
       </div>
     </section>
 
@@ -117,17 +119,29 @@
         <h1 class="hero-title">Bosco <span class="amp">&amp;</span> Stefina</h1>
       </div>
 
+      <!-- full-bleed marigold band with scalloped edges; the lace frame
+           straddles the tile/gold boundary as in the print -->
       <div class="hero-panel">
-        <img class="bloom bloom--hero-br" src="../images/stephens/spray.webp" data-drift="90" alt="" aria-hidden="true">
-        <figure class="frame frame--lace" id="heroFrame">
-          <img src="../images/stephens/church-scene.webp" alt="Watercolour of Bosco and Stefina before St. Francis of Assisi Cathedral, Ernakulam">
-        </figure>
+        <div class="hero-panel-in">
+          <img class="bloom bloom--hero-br" src="../images/stephens/spray.webp" data-drift="90" alt="" aria-hidden="true">
+          <!-- the lace doily frame is a single painted asset; only the
+               church scene inside it animates. Florals are anchored to the
+               frame corners so they always read as tucked into the lace -->
+          <figure class="frame frame--doily" id="heroFrame">
+            <img class="doily" src="../images/stephens/lace-frame.jpg" alt="" aria-hidden="true">
+            <div class="doily-win">
+              <img id="heroArt" src="../images/stephens/church-scene.webp" alt="Watercolour of Bosco and Stefina before St. Francis of Assisi Cathedral, Ernakulam">
+            </div>
+            <img class="bloom bloom--hero-fl1" src="../images/stephens/blossom.webp" data-drift="50" alt="" aria-hidden="true">
+            <img class="bloom bloom--hero-fl2" src="../images/stephens/blossom-branch.webp" data-drift="110" alt="" aria-hidden="true">
+            <img class="bloom bloom--hero-fl3" src="../images/stephens/blossom.webp" data-drift="80" alt="" aria-hidden="true">
+          </figure>
 
-        <blockquote class="verse" data-reveal>
-          <p>“He will fulfil what<br>He has planned for me.”</p>
-          <cite>Job 23 : 14</cite>
-        </blockquote>
-        <p class="hero-tag" data-reveal>God’s Plan — and we have decided.</p>
+          <blockquote class="verse" data-reveal>
+            <p>He will fulfil what<br>He has planned for me — <cite>Job 23:14</cite></p>
+          </blockquote>
+          <p class="hero-tag" data-reveal>God’s Plan — And we have decided</p>
+        </div>
       </div>
     </section>
 
@@ -174,17 +188,47 @@
       <img class="bloom bloom--std-bl" src="../images/stephens/blossom-branch.webp" data-drift="150" alt="" aria-hidden="true">
 
       <div class="std-panel">
+        <!-- the ornate bracket-shaped marigold panel (not a box) with its
+             white keyline, stretched to fit whatever height the content needs -->
+        <svg class="std-shape" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
+          <path class="std-shape-fill" d="M200 6 H288 C310 6 312 24 326 32 C340 40 358 36 366 52 C374 68 362 80 370 96 C377 110 394 112 394 130 V430 C394 448 377 450 370 464 C362 480 374 492 366 508 C358 524 340 520 326 528 C312 536 310 554 288 554 H112 C90 554 88 536 74 528 C60 520 42 524 34 508 C26 492 38 480 30 464 C23 450 6 448 6 430 V130 C6 112 23 110 30 96 C38 80 26 68 34 52 C42 36 60 40 74 32 C88 24 90 6 112 6 Z"/>
+          <path class="std-shape-line" d="M200 6 H288 C310 6 312 24 326 32 C340 40 358 36 366 52 C374 68 362 80 370 96 C377 110 394 112 394 130 V430 C394 448 377 450 370 464 C362 480 374 492 366 508 C358 524 340 520 326 528 C312 536 310 554 288 554 H112 C90 554 88 536 74 528 C60 520 42 524 34 508 C26 492 38 480 30 464 C23 450 6 448 6 430 V130 C6 112 23 110 30 96 C38 80 26 68 34 52 C42 36 60 40 74 32 C88 24 90 6 112 6 Z" transform="translate(200 280) scale(0.93) translate(-200 -280)"/>
+        </svg>
+
+        <!-- white blossoms tucked around the panel (PDF p.5) -->
+        <img class="std-flower std-flower--tl" src="../images/stephens/blossom.webp" alt="" aria-hidden="true">
+        <img class="std-flower std-flower--tr" src="../images/stephens/blossom.webp" alt="" aria-hidden="true">
+        <img class="std-flower std-flower--br" src="../images/stephens/blossom-branch.webp" alt="" aria-hidden="true">
+
         <p class="std-kicker type" data-reveal>Save the Date</p>
         <p class="std-date type" data-reveal>Wednesday,<br>January 06, 2027</p>
 
-        <!-- champagne toast doodles -->
-        <svg class="flute flute--l" viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 8h22c-1 12-5 20-11 22-6-2-10-10-11-22z"/><path d="M33 30v34"/><path d="M22 66h22"/>
-          <circle cx="30" cy="6" r="1.4"/><circle cx="38" cy="14" r="1.2"/><circle cx="26" cy="16" r="1.2"/>
+        <!-- champagne toast — hands raising flutes, as inked in the print -->
+        <svg class="flute flute--l" viewBox="0 0 110 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M44 6h34c-1.5 15-8 26-17 30-9-4-15.5-15-17-30z"/>
+          <circle class="bub" cx="50" cy="14" r="1.6"/><circle class="bub" cx="61" cy="9" r="1.4"/><circle class="bub" cx="66" cy="18" r="1.4"/>
+          <path d="M61 36v42"/>
+          <path d="M48 78h26"/>
+          <path fill="#ecae28" stroke="none" d="M46 45c-7 1-11 6-10 12s8 10 16 9 13-6 12-12-8-10-18-9z"/>
+          <path d="M46 45c-7 1-11 6-10 12s8 10 16 9 13-6 12-12-8-10-18-9z"/>
+          <path d="M41 50c6-2 12-2 18 0M40 55c7-2 14-2 20 0M41 60c6-2 12-2 18 0"/>
+          <path d="M63 47c5 3 6 9 1 13"/>
+          <path d="M37 52C26 50 16 46 6 44M38 62c-10 2-20 5-30 8"/>
+          <path d="M7 42c-4 9-3 20 1 28"/>
         </svg>
-        <svg class="flute flute--r" viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 8h22c-1 12-5 20-11 22-6-2-10-10-11-22z"/><path d="M33 30v34"/><path d="M22 66h22"/>
-          <circle cx="30" cy="6" r="1.4"/><circle cx="38" cy="14" r="1.2"/><circle cx="26" cy="16" r="1.2"/>
+        <svg class="flute flute--r" viewBox="0 0 110 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <g transform="translate(110 0) scale(-1 1)">
+            <path d="M44 6h34c-1.5 15-8 26-17 30-9-4-15.5-15-17-30z"/>
+            <circle class="bub" cx="50" cy="14" r="1.6"/><circle class="bub" cx="61" cy="9" r="1.4"/><circle class="bub" cx="66" cy="18" r="1.4"/>
+            <path d="M61 36v42"/>
+            <path d="M48 78h26"/>
+            <path fill="#ecae28" stroke="none" d="M46 45c-7 1-11 6-10 12s8 10 16 9 13-6 12-12-8-10-18-9z"/>
+            <path d="M46 45c-7 1-11 6-10 12s8 10 16 9 13-6 12-12-8-10-18-9z"/>
+            <path d="M41 50c6-2 12-2 18 0M40 55c7-2 14-2 20 0M41 60c6-2 12-2 18 0"/>
+            <path d="M63 47c5 3 6 9 1 13"/>
+            <path d="M37 52C26 50 16 46 6 44M38 62c-10 2-20 5-30 8"/>
+            <path d="M7 42c-4 9-3 20 1 28"/>
+          </g>
         </svg>
 
         <p class="std-presence" data-reveal>Your presence is the<br>greatest gift of all</p>
@@ -200,13 +244,27 @@
               <div class="film-checker" aria-hidden="true"></div>
             </div>
           </div>
-          <img class="film-slot" src="../images/stephens/slot.webp" alt="" aria-hidden="true">
+          <div class="film-slot" aria-hidden="true"></div>
         </div>
       </div>
     </section>
 
     <!-- ═══════════ PAGE 6 · Finale (car + compliments) ═══════════ -->
     <section class="finale" id="finale">
+
+      <!-- the golden ribbon that winds down toward the car, inked in as you scroll -->
+      <svg class="ribbon" viewBox="0 0 400 560" fill="none" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+        <path id="ribbonPath" d="M374 10
+          C 322 58, 258 62, 242 100
+          c -14 34 30 54 54 32
+          c 22 -20 -6 -54 -40 -36
+          C 216 128 164 168 148 216
+          c -14 42 16 80 10 122
+          c -5 36 -34 62 -30 100
+          c 4 34 34 54 70 62"
+          stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+
       <div class="car-lane">
         <div class="car-wrap" id="carWrap">
           <img class="car" src="../images/stephens/car.webp" alt="Bosco and Stefina driving away, just married">
@@ -227,6 +285,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="../js/stephens.js?v=1"></script>
+  <script src="../js/stephens.js?v=11"></script>
 </body>
 </html>

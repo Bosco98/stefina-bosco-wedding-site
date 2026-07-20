@@ -62,11 +62,31 @@ function runAnimated() {
     if (isOpen) return;
     isOpen = true;
 
+    /* Freeze the idle breathing, then align the opened tableau so its
+       envelope body sits EXACTLY on the sealed envelope. The crossfade
+       then reads as one envelope whose flap swings open in place —
+       never as a cut to a second envelope. */
+    gsap.killTweensOf(["#env", "#envSeal"]);
+
+    const envRect = document.querySelector(".env-art").getBoundingClientRect();
+    const pocket  = document.querySelector(".op-pocket");
+    const pRect   = pocket.getBoundingClientRect();
+    const oRect   = opened.getBoundingClientRect();
+
+    const scale = envRect.width / pRect.width;
+    const originX = (pRect.left + pRect.width  / 2) - oRect.left;
+    const originY = (pRect.top  + pRect.height / 2) - oRect.top;
+    const dx = (envRect.left + envRect.width  / 2) - (pRect.left + pRect.width  / 2);
+    const dy = (envRect.top  + envRect.height / 2) - (pRect.top  + pRect.height / 2);
+
+    gsap.set(opened, { transformOrigin: originX + "px " + originY + "px", x: dx, y: dy, scale: scale });
+
     const tl = gsap.timeline({
       defaults: { ease: "power3.out" },
       onComplete: () => {
         stage.style.display = "none";        // overlay gone; P3 is now the top
         root.classList.remove("is-sealed");  // unlock the page
+        opened.setAttribute("aria-hidden", "false");
         lenis.start();
         ScrollTrigger.refresh();
       }
@@ -74,25 +94,31 @@ function runAnimated() {
 
     tl
       // the wax seal lifts away — never cracked (a broken seal reads as ill omen)
-      .to("#envSeal", { scale: 1.5, autoAlpha: 0, rotate: 8, duration: 0.45, ease: "power2.in" }, 0)
+      .to("#envSeal", { scale: 1.5, autoAlpha: 0, rotate: 8, duration: 0.4, ease: "power2.in" }, 0)
       .to(tapHint,    { autoAlpha: 0, y: -10, duration: 0.3 }, 0)
-      // the sealed envelope opens into the same envelope, now unsealed
-      .to(sealed,     { autoAlpha: 0, scale: 1.03, duration: 0.5, ease: "power1.inOut" }, 0.16)
-      .set(sealed,    { display: "none" }, 0.64)
-      .fromTo(opened, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45 }, 0.28)
-      // the flap swings up and open
-      .fromTo(".op-flap", { rotateX: -150, transformOrigin: "50% 100%" },
-                          { rotateX: 0, duration: 0.7, ease: "power2.out" }, 0.32)
+
+      // in-place crossfade: same footprint, so the envelope simply reads
+      // as now-open — no rotation of the artwork (the asset is the whole
+      // envelope, flipping it flips the envelope itself)
+      .to(sealed,     { autoAlpha: 0, duration: 0.4, ease: "power1.inOut" }, 0.3)
+      .to(opened,     { autoAlpha: 1, duration: 0.4, ease: "power1.inOut" }, 0.3)
       // the invitation card rises up and OUT of the envelope
-      .fromTo(".op-card", { yPercent: 44, autoAlpha: 0, scale: 0.9 },
-                          { yPercent: 0, autoAlpha: 1, scale: 1, duration: 0.85, ease: "back.out(1.5)" }, 0.5)
-      .fromTo(".op-pocket", { yPercent: 10, autoAlpha: 0 },
-                            { yPercent: 0, autoAlpha: 1, duration: 0.5 }, 0.48)
-      // it settles, lifted clear of the envelope, and holds a beat
+      .fromTo(".op-card", { yPercent: 46, autoAlpha: 0, scale: 0.92 },
+                          { yPercent: 0, autoAlpha: 1, scale: 1, duration: 0.9, ease: "power3.out" }, 0.55)
+      // greenery spills out of the envelope mouth
+      .fromTo(".op-sprig", { autoAlpha: 0, rotate: 2, y: 16 },
+                           { autoAlpha: 1, rotate: 14, y: 0, duration: 0.6 }, 0.7)
+      // the whole tableau glides from the sealed envelope's footprint
+      // to its resting composition while the card settles
+      .to(opened, { x: 0, y: 0, scale: 1, duration: 0.9, ease: "power2.inOut" }, 0.95)
       .to(".op-card", { y: -12, duration: 0.7, ease: "sine.out" }, 1.3)
+      // the lace calling card drops across the envelope's foot
+      .fromTo("#opInvited", { autoAlpha: 0, scale: 0.55, rotate: 7, y: 26 },
+                            { autoAlpha: 1, scale: 1, rotate: -4, y: 0,
+                              duration: 0.65, ease: "back.out(1.6)" }, 1.45)
 
       // ── dissolve into the wedding-name slide (P3) ──
-      .addLabel("diss", 1.95)
+      .addLabel("diss", 2.65)
       .to(stage, { autoAlpha: 0, duration: 0.9, ease: "power2.inOut" }, "diss")
       .fromTo("#hero", { autoAlpha: 0.3, scale: 1.05, transformOrigin: "50% 40%" },
                        { autoAlpha: 1, scale: 1, duration: 1.1, ease: "power2.out" }, "diss")
@@ -141,12 +167,13 @@ function runAnimated() {
     );
   });
 
-  /* ── 3. Hero church frame — a gentle scrubbed rise ──────────── */
-  gsap.fromTo("#heroFrame",
-    { y: 60, scale: 0.94 },
+  /* ── 3. Hero church scene — the doily frame stays put; the art
+        zooms in from very small, growing into the frame's window ──── */
+  gsap.fromTo("#heroArt",
+    { autoAlpha: 0, scale: 0.1, transformOrigin: "50% 50%" },
     {
-      y: 0, scale: 1, ease: "none",
-      scrollTrigger: { trigger: "#heroFrame", start: "top 92%", end: "top 45%", scrub: 0.6 }
+      autoAlpha: 1, scale: 1, duration: 1.6, ease: "power3.out",
+      scrollTrigger: { trigger: "#heroFrame", start: "top 80%", toggleActions: "play none none none" }
     }
   );
 
@@ -160,18 +187,35 @@ function runAnimated() {
     }
   );
 
-  /* ── 5. Car drives in from the left, cans jiggling ──────────── */
+  /* ── 5. The champagne toast raises as the panel arrives ─────── */
+  const toastTl = gsap.timeline({
+    scrollTrigger: { trigger: ".std-panel", start: "top 70%", toggleActions: "play none none none" }
+  });
+  toastTl
+    .from(".flute--l", { rotation: -32, x: -18, y: 14, autoAlpha: 0, duration: 0.8, ease: "power3.out" }, 0)
+    .from(".flute--r", { rotation: 32, x: 18, y: 14, autoAlpha: 0, duration: 0.8, ease: "power3.out" }, 0.1);
+
+  /* ── 6. Car drives in from the left and shakes to a stop ────── */
   const carTl = gsap.timeline({
     scrollTrigger: { trigger: "#finale", start: "top 72%", toggleActions: "play none none none" }
   });
   carTl
-    .fromTo("#carWrap", { x: "-115%", rotate: -1 },
+    .fromTo("#carWrap", { x: "-230%", rotate: -1 },
       { x: "0%", rotate: 0, duration: 1.1, ease: "power2.out" })
-    .to("#carWrap", { x: "+=6", yoyo: true, repeat: 3, duration: 0.09, ease: "sine.inOut" }, 0.5)
-    .fromTo(".can", { rotate: 0 },
-      { rotate: 34, yoyo: true, repeat: 5, duration: 0.12, stagger: 0.03, ease: "sine.inOut" }, 0.35);
+    .to("#carWrap", { x: "+=6", yoyo: true, repeat: 3, duration: 0.09, ease: "sine.inOut" }, 0.5);
 
-  /* ── 6. Blossom parallax (a few px against the scroll) ──────── */
+  /* ── 7. The gold ribbon inks itself in as the finale scrolls ── */
+  const ribbon = document.getElementById("ribbonPath");
+  if (ribbon) {
+    const len = ribbon.getTotalLength();
+    gsap.set(ribbon, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.to(ribbon, {
+      strokeDashoffset: 0, ease: "none",
+      scrollTrigger: { trigger: "#finale", start: "top 85%", end: "center center", scrub: 0.6 }
+    });
+  }
+
+  /* ── 8. Blossom parallax (a few px against the scroll) ──────── */
   document.querySelectorAll(".bloom").forEach((b) => {
     const drift = parseFloat(b.dataset.drift) || 0;
     if (!drift) return;
