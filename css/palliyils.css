@@ -1,0 +1,92 @@
+/* ══════════════════════════════════════════════════════════════
+   /palliyils/ — page-scoped overrides (loaded AFTER style.css).
+   Keeps the shared style.css untouched so /correas is unaffected.
+   ══════════════════════════════════════════════════════════════ */
+
+/* The antique gold used for labels, dates and captions (#96793f)
+   only clears ~3.7:1 on the cream ground — below AA for small text,
+   and guests found it hard to read. Deepen it to a dark espresso-gold
+   for this route only: it keeps a hint of the warm identity but reads
+   clearly (~10:1 on cream). Every gold-deep usage on this page sits on
+   a light background, so darkening it only improves contrast.
+
+   Alternatives if you want a different tone (just swap the value):
+     #4a1a30  deep plum   (~9:1)
+     #2a1420  body ink    (~13:1, no colored accent) */
+:root {
+  --gold-deep: #4a3510;
+}
+
+/* The accent labels/dates/captions inherit the body weight (400). As small
+   letter-spaced uppercase they read thin — notch them up to 600 for this
+   route so they hold their own alongside the darker color. (Drop to 500
+   for a gentler bump if 600 feels heavy.) */
+.env-card-line,
+.env-hint,
+.verse cite,
+.details-parents-sep,
+.act-time-mer,
+.act-place,
+.act-map,
+.closing-sign,
+.mini-env-caption {
+  font-weight: 600;
+}
+
+/* ── Tap-to-open intro (js/palliyils.js) ──────────────────────────
+   This route opens on a tap instead of the main site's scroll-driven
+   pin. While `is-sealed` is on <html>, the page is held at the top;
+   js removes it when the open animation finishes. ── */
+html.is-sealed,
+html.is-sealed body {
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+/* the sealed envelope room is the tap target */
+.intro-env-layer {
+  cursor: pointer;
+}
+
+/* the down-chevron asks for a scroll; this route opens on tap, so drop it */
+.intro-arrow {
+  display: none;
+}
+
+/* ── "Play again" — restarts the guided experience from the sealed
+   envelope. Sits under the resealed envelope at the page foot. ── */
+.play-again {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pink-deep);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--pink-deep);
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.play-again:hover,
+.play-again:focus-visible {
+  background: var(--pink-deep);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.play-again:focus-visible {
+  outline: 2px solid var(--pink-deep);
+  outline-offset: 3px;
+}
+.play-again-ic {
+  width: 1.05em;
+  height: 1.05em;
+}

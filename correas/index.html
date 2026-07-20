@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- before first paint, or the unmasked hero flashes ahead of the
+       envelope; main.js removes the class again if GSAP fails to load -->
+  <script>document.documentElement.classList.add("js");</script>
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RG49W72QXF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RG49W72QXF');
+  </script>
+
+  <title>Bosco &amp; Stefina — January 6th, 2027</title>
+  <meta name="description" content="Bosco & Stefina invite you to celebrate their Holy Matrimony — 3:30 pm, Wednesday, January 6th, 2027, at St. Francis of Assisi Cathedral, Ernakulam.">
+  <link rel="canonical" href="https://stefinawedsbosco.com/correas/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Bosco Correa &amp; Stefina Palliyil">
+  <meta name="theme-color" content="#faf3e8">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Bosco &amp; Stefina">
+  <meta property="og:title" content="Bosco &amp; Stefina — January 6th, 2027">
+  <meta property="og:description" content="Together with their families, Bosco & Stefina invite you to celebrate their Holy Matrimony — January 6th, 2027, Ernakulam.">
+  <meta property="og:url" content="https://stefinawedsbosco.com/correas/">
+  <meta property="og:image" content="https://stefinawedsbosco.com/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Bosco & Stefina — Wednesday, January 6th, 2027, Ernakulam">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bosco &amp; Stefina — January 6th, 2027">
+  <meta name="twitter:description" content="Together with their families, Bosco & Stefina invite you to celebrate their Holy Matrimony — January 6th, 2027, Ernakulam.">
+  <meta name="twitter:image" content="https://stefinawedsbosco.com/images/og-image.jpg">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Playfair+Display:ital,wght@1,400;1,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- bump ?v= together with the one on main.js whenever either file
+       changes — stale cached JS against fresh HTML breaks the intro -->
+  <link rel="stylesheet" href="../css/style.css?v=2">
+
+  <!-- Structured data: the wedding as a schema.org Event -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "The Wedding of Bosco & Stefina",
+    "description": "The Holy Matrimony of Bosco Correa & Stefina Palliyil, followed by a reception.",
+    "startDate": "2027-01-06T15:30:00+05:30",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "image": "https://stefinawedsbosco.com/images/og-image.jpg",
+    "url": "https://stefinawedsbosco.com/correas/",
+    "location": {
+      "@type": "Place",
+      "name": "St. Francis of Assisi Roman Catholic Metropolitan Cathedral",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ernakulam",
+        "addressRegion": "Kerala",
+        "addressCountry": "IN"
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "Correa & Palliyil Family"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <main id="main">
+
+    <!-- ═══════════ INTRO — one pinned sequence: sealed envelope → wax melts →
+         flap opens → the painting blooms out of the envelope like ink in water ═══════════ -->
+    <section class="intro" id="intro">
+
+      <!-- Layer 1 (beneath): the hero — revealed through an expanding watercolor bloom -->
+      <div class="intro-hero" id="introHero">
+        <div class="hero-art">
+          <img class="hero-church" id="heroChurch" src="../images/church-water-color-faded.webp"
+               alt="Watercolor painting of St. Francis of Assisi Cathedral, Ernakulam, with the couple at its door">
+        </div>
+        <header class="hero-titles" id="heroTitles">
+          <p class="hero-intro" data-reveal>Together with their families</p>
+          <h1 class="hero-names">
+            <span class="hero-name" data-reveal>Bosco</span>
+            <span class="hero-amp" data-reveal>&amp;</span>
+            <span class="hero-name" data-reveal>Stefina</span>
+          </h1>
+          <p class="hero-date" data-reveal>Wednesday · January 6th, 2027 · Ernakulam</p>
+        </header>
+      </div>
+
+      <!-- Layer 2 (above): the envelope room -->
+      <div class="intro-env-layer" id="envLayer">
+        <div class="envelope" id="envelope">
+          <div class="env-shadow"></div>
+          <div class="env-back"></div>
+          <div class="env-interior"></div>
+          <div class="env-card" id="envCard">
+            <p class="env-card-mono">B <span>&amp;</span> S</p>
+            <p class="env-card-line">You are invited</p>
+          </div>
+          <div class="env-flap-left"></div>
+          <div class="env-flap-right"></div>
+          <div class="env-flap-bottom"></div>
+          <div class="env-flap-top" id="envFlap"><span class="env-flap-inner"></span></div>
+          <div class="env-seal-wrap" id="envSealWrap">
+            <img class="env-seal" src="../images/sb-wax-seal-test.webp" alt="">
+          </div>
+          <div class="env-texture"></div>
+        </div>
+        <p class="env-hint" id="envHint">Scroll to open your invitation</p>
+      </div>
+
+      <!-- stays through the whole pinned sequence, above both layers -->
+      <svg class="intro-arrow" id="envArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </section>
+
+    <!-- ═══════════ INTERLUDE I — Job 23:14 ═══════════ -->
+    <section class="interlude interlude--cream" id="interlude1">
+      <canvas class="wc" data-wc="light" data-seed="2.0" aria-hidden="true"></canvas>
+      <img class="blossom blossom--i1" src="../images/blossom-diagonal.webp" data-drift="90" alt="" aria-hidden="true">
+      <div class="interlude-inner">
+        <p class="verse-mark" aria-hidden="true"><svg viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2.5v27M4.5 10.5h15"/></svg></p>
+        <blockquote class="verse">
+          <p>“He will fulfil what<br>He has planned for me.”</p>
+          <cite>Job 23 : 14</cite>
+        </blockquote>
+        <p class="verse-echo">God’s plan — and we have decided.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════ EVENT DETAILS — full-bleed over living watercolor (WebGL) ═══════════ -->
+    <section class="details" id="details">
+      <canvas class="wc" data-wc="light" data-seed="1.0" aria-hidden="true"></canvas>
+      <img class="blossom blossom--details-tr" src="../images/blossom-corner-2.webp" data-drift="170" alt="" aria-hidden="true">
+      <img class="blossom blossom--details-bl" src="../images/blossom-edge.webp" data-drift="120" alt="" aria-hidden="true" style="transform: rotate(56deg);">
+      <div class="details-inner">
+
+        <p class="details-open" data-words>With hearts full of joy, and with the blessings of</p>
+        <p class="details-parents">
+          <span data-words>Mrs.&nbsp;Ruby &amp; Mr.&nbsp;Hilary Correa</span>
+          <span class="details-parents-sep" aria-hidden="true">·</span>
+          <span data-words>Mrs.&nbsp;Raxey &amp; Mr.&nbsp;Stephen Palliyil</span>
+        </p>
+
+        <h2 class="details-names">Bosco <span>&amp;</span> Stefina</h2>
+        <p class="details-sub" data-words>invite you and your family to celebrate their Holy Matrimony</p>
+
+        <div class="acts">
+          <article class="act">
+            <!-- trying the glyph below instead — original artwork kept for easy revert:
+            <img class="act-sprig act-sprig--cross" src="../images/sprig-cross-candle.webp" alt="" aria-hidden="true">
+            -->
+            <svg class="act-sprig act-sprig--glyph" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 2.5v27M4.5 10.5h15"/></svg>
+            <p class="act-label">The Ceremony</p>
+            <p class="act-time"><span class="act-time-big">3:30</span><span class="act-time-mer">in the afternoon</span></p>
+            <hr class="act-rule">
+            <p class="act-date">Wednesday · January 6th, 2027</p>
+            <p class="act-venue">St.&nbsp;Francis of Assisi<br>Roman Catholic Metropolitan Cathedral</p>
+            <p class="act-place">Ernakulam</p>
+            <a class="act-map" href="https://www.google.com/maps/search/?api=1&amp;query=St+Francis+Assisi+Roman+Catholic+Metropolitan+Cathedral+Ernakulam" target="_blank" rel="noopener">
+              <svg class="act-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+              <span>View on Map</span>
+            </a>
+          </article>
+
+          <div class="acts-divider" aria-hidden="true"></div>
+
+          <article class="act">
+            <img class="act-sprig" src="../images/sprig-jasmine.webp" alt="" aria-hidden="true">
+            <p class="act-label">The Reception</p>
+            <p class="act-time"><span class="act-time-big">Sundown</span><span class="act-time-mer">the same evening</span></p>
+            <hr class="act-rule">
+            <p class="act-date">Dinner &amp; dancing to follow</p>
+            <p class="act-venue">Alpha Horizon<br>Vallarpadam</p>
+            <p class="act-place">Kochi, Ernakulam</p>
+            <a class="act-map" href="https://www.google.com/maps/search/?api=1&amp;query=Alpha+Horizon+Vallarpadam+Kochi" target="_blank" rel="noopener">
+              <svg class="act-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+              <span>View on Map</span>
+            </a>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════ INTERLUDE II — Song of Songs ═══════════ -->
+    <section class="interlude interlude--plum" id="interlude2">
+      <canvas class="wc" data-wc="dark" data-seed="5.0" aria-hidden="true"></canvas>
+      <div class="interlude-inner">
+        <blockquote class="verse">
+          <p>“Arise, my love, my beautiful one, and come away —<br>
+          for the flowers appear on the earth,<br>
+          the time of singing has come.”</p>
+          <cite>Song of Songs 2 : 10–12</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ═══════════ GALLERY ═══════════ -->
+    <section class="gallery" id="gallery">
+      <img class="blossom blossom--gallery-tl" src="../images/blossom-corner.webp" data-drift="130" alt="" aria-hidden="true">
+      <h2 class="gallery-title">Together is our favorite place to be.</h2>
+      <div class="gallery-frames">
+        <figure class="frame frame--left">
+          <img src="../images/gallery-couple.webp" alt="Bosco and Stefina">
+        </figure>
+        <figure class="frame frame--right">
+          <img src="../images/gallery-car.webp" alt="Bosco and Stefina driving away, just married">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ═══════════ CLOSING — the card reseals ═══════════ -->
+    <section class="closing" id="closing">
+      <!-- the plum wash lives only behind the farewell words; the finale
+           stage below returns to the intro's cream room -->
+      <div class="closing-wash">
+        <canvas class="wc" data-wc="dark" data-seed="9.0" aria-hidden="true"></canvas>
+        <div class="closing-inner">
+          <p class="closing-note">
+            Your presence is the dearest gift we could ask for.<br>
+            Come pray with us, dine with us,<br>
+            and dance the night into morning.
+          </p>
+          <p class="closing-sign">With all our love,</p>
+          <p class="closing-names">Correa &amp; Palliyil Family</p>
+        </div>
+      </div>
+
+      <!-- the finale mirrors the opening frame: the same envelope, in the
+           same cream room, resealed at the same centered spot -->
+      <div class="mini-envelope" id="miniEnvelope" aria-hidden="true">
+        <div class="mini-env-body">
+          <div class="mini-env-card"></div>
+          <div class="mini-env-pocket"></div>
+          <div class="mini-env-flap" id="miniFlap"></div>
+          <img class="mini-env-seal" id="miniSeal" src="../images/sb-wax-seal-test.webp" alt="">
+        </div>
+        <p class="mini-env-caption">Sealed with love · 06 · 01 · 2027</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="../js/main.js?v=2"></script>
+</body>
+</html>

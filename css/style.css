@@ -886,7 +886,7 @@ html:not(.js) .intro-env-layer {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2rem, 6vw, 3rem);
+  font-size: clamp(1rem, 4vw, 2rem);
   color: var(--pink-deep);
 }
 
