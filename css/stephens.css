@@ -154,21 +154,37 @@ html.js .stage.is-overlay {
 }
 .env-seal-mono i { font-style: normal; opacity: .75; font-size: .8em; }
 
+/* a proper pill button above the envelope, its arrow pointing down at
+   the seal — same visual language as the "Play again" button */
 .tap-hint {
   appearance: none;
-  border: 0;
-  background: transparent;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: .5em;
+  gap: .55em;
   font-family: var(--ff-type);
   font-weight: 700;
   letter-spacing: .28em;
   text-transform: uppercase;
   font-size: clamp(11px, 3vw, 13px);
   color: var(--ink);
-  padding: 4px 6px;
+  padding: 0.7rem 1.1rem 0.7rem 1.4rem; /* the wide tracking pads the right visually */
+  background: var(--cream-2);
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 0 10px 22px rgba(26, 42, 108, .18);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.tap-hint:hover,
+.tap-hint:focus-visible {
+  background: var(--ink);
+  border-color: var(--gold);
+  color: var(--cream);
+  transform: translateY(-1px);
+}
+.tap-hint:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 3px;
 }
 .tap-hint svg { width: 18px; animation: nudge 1.8s ease-in-out infinite; }
 @keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
@@ -818,6 +834,42 @@ html:not(.js) .tap-hint span::after { content: " ↓ scroll"; }
   padding: .12em .6em .2em;
   background: radial-gradient(ellipse 70% 62% at 50% 54%,
     rgba(253,251,243,.96) 0%, rgba(253,251,243,.9) 46%, rgba(253,251,243,0) 78%);
+}
+
+/* ── "Play again" — restarts the experience from the sealed envelope.
+   Sits under the sign-off at the page foot. ── */
+.play-again {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: clamp(20px, 5vh, 36px) 0 0;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--ff-type);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--cream-2);
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.play-again:hover,
+.play-again:focus-visible {
+  background: var(--ink);
+  border-color: var(--gold);
+  color: var(--cream);
+  transform: translateY(-1px);
+}
+.play-again:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 3px;
+}
+.play-again-ic {
+  width: 1.05em;
+  height: 1.05em;
 }
 
 /* ── blossoms drifting in the section corners ── */

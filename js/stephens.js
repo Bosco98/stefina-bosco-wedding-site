@@ -14,6 +14,18 @@ if (!window.gsap || !window.ScrollTrigger || !window.Lenis) {
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* "Play again" restarts the whole experience from the sealed envelope.
+   Wired at top level so it works under reduced motion too: it flags a
+   replay and reloads; on the fresh load the open sequence auto-plays. */
+(() => {
+  const btn = document.getElementById("playAgain");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    try { sessionStorage.setItem("st_replay", "1"); } catch (e) { /* private mode */ }
+    location.reload();
+  });
+})();
+
 const root = document.documentElement;
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -89,6 +101,7 @@ function runAnimated() {
         opened.setAttribute("aria-hidden", "false");
         lenis.start();
         ScrollTrigger.refresh();
+        gsap.delayedCall(0.7, startJourney); // a beat on the names, then glide
       }
     });
 
@@ -127,9 +140,87 @@ function runAnimated() {
               { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.0, stagger: 0.14, ease: "power3.out" }, "diss+=0.25");
   }
 
+  /* After the open sequence rests on the couple's names, keep going:
+     a gentle guided descent eases down to each section, settles for a
+     beat, then moves on — until the guest scrolls, which hands control
+     straight back. Same choreography as /palliyils, but driven through
+     Lenis (a GSAP tween feeds lenis.scrollTo with immediate: true, so
+     GSAP's easing is the only smoothing — no double-lag). Leg time is
+     proportional to distance, so it's one steady slow speed throughout. */
+  function startJourney() {
+    const HOLD = 0.25;                 // barely a beat at each anchor
+    const SPEED = 5.5;                 // seconds per viewport of travel (slow, steady)
+    const MIN_LEG = 2.5;               // even a short hop eases gently
+    const vh = window.innerHeight;
+    const OFFSET = Math.round(vh * 0.1);   // leave a little room above each anchor
+
+    const resolveY = (s) => {
+      if (s === "max") return Math.max(0, document.documentElement.scrollHeight - vh);
+      const el = document.querySelector(s);
+      if (!el) return null;
+      return Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY) - OFFSET);
+    };
+
+    const targets = [];
+    ["#invite", "#std", "#finale", "max"].forEach((s) => {
+      const y = resolveY(s);
+      if (y == null) return;
+      // skip anchors that resolve to essentially the same spot as the last one
+      if (targets.length && Math.abs(y - targets[targets.length - 1]) < 60) return;
+      targets.push(y);
+    });
+    if (!targets.length) return;
+
+    const pos = { y: window.scrollY };
+    const journey = gsap.timeline({ paused: true });
+    let prev = pos.y;
+    targets.forEach((y, i) => {
+      const dur = Math.max(MIN_LEG, (Math.abs(y - prev) / vh) * SPEED);
+      prev = y;
+      journey.to(pos, {
+        y: y, duration: dur, ease: "sine.inOut",
+        onUpdate: () => lenis.scrollTo(pos.y, { immediate: true })
+      }, i === 0 ? 0 : "+=" + HOLD);
+    });
+
+    // the moment the guest scrolls or presses a key, hand control back
+    const halt = () => { journey.kill(); off(); };
+    function off() {
+      window.removeEventListener("wheel", halt);
+      window.removeEventListener("touchstart", halt);
+      window.removeEventListener("keydown", halt);
+    }
+    journey.eventCallback("onComplete", off);
+    window.addEventListener("wheel", halt, { passive: true });
+    window.addEventListener("touchstart", halt, { passive: true });
+    window.addEventListener("keydown", halt);
+
+    journey.play();
+  }
+
   // the whole sealed area opens on tap/click
   sealed.addEventListener("click", open);
   sealed.style.cursor = "pointer";
+
+  /* "Play again" surfaces as the page foot arrives. It's the last thing
+     on the page, so the generic [data-reveal] start ("top 82%") is
+     unreachable for it — reveal it the moment it enters the viewport. */
+  const playBtn = document.getElementById("playAgain");
+  if (playBtn) {
+    gsap.fromTo(playBtn,
+      { autoAlpha: 0, y: 14 },
+      {
+        autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out",
+        scrollTrigger: { trigger: playBtn, start: "top bottom", toggleActions: "play none none reverse" }
+      });
+  }
+
+  // arrived here via "Play again"? replay the open sequence straight away,
+  // no second tap needed
+  if (sessionStorage.getItem("st_replay")) {
+    sessionStorage.removeItem("st_replay");
+    gsap.delayedCall(0.4, open);
+  }
 
   /* idle life while sealed: the envelope breathes, the seal glimmers */
   gsap.to("#env", { y: -8, duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1 });
